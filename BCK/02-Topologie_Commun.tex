@@ -1,7 +1,8 @@
-\section{Algorithmes de Dijkstra et A*}
+\chapter{Graphes et topologie de réseaux}
+\label{chap:premierchapitre}
 
-
-\paragraph{Algorithmes de Dijkstra : }Edgser Wybe Dijkstra (EWD), Physicien Néerlandais reconverti à l'informatique en 1955, a proposé en 1959 un algorithme de recherche de chemin minimum 
+\section{Algorithme de Dijkstra}
+Edgser Wybe Dijkstra (EWD), Physicien Néerlandais reconverti à l'informatique en 1955, a proposé en 1959 un algorithme de recherche de chemin minimum 
 dans un graphe  dont  la complexité est en O(n). 
 
 \begin{figure}[htp]
@@ -36,7 +37,7 @@ connexe pondéré (orienté ou non) dont le poids lié aux arêtes est positif o
 
 
 
-%  \cite{Roque2012,Roque2012b,Roque2012c,Roque2012d}. 
+ %\cite{Roque2012,Roque2012b,Roque2012c,Roque2012d}. 
  
 
 
@@ -56,34 +57,31 @@ du réseau dont la distance au noeud de départ est la plus faible.
 %   \caption{Exemple de diagramme TikZ.}
 %   \label{fig:une-image}
 % \end{figure}
-\paragraph{Algorithme A* }
 
+\section{Algorithme A*}
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse l
-\paragraph{Utilisation}
+\section{Utilisation}
 
-Dijkstra est utilisé dans le routage dynamique OSPF, on peutdonc envisager optimiser un réseau
-de noeuds distribués.
+Dijkstra est utilisé dans le routaghe dynamique OSPF
+Comment les utiliser pour transférer de façon optimale une donnée d'un noeud à un autre. 
 
-
-Comment les utiliser pour transférer de façon optimale une donnée d'un noeud à un autre. ?????
-
-% \begin{table}[ht]
-%   \begin{center}
-%     \begin{tabular}{|c|c|c|c|c|}
-%       \hline
-%       & $h(t,\tau)$ & $S_{\OP{H}}^{(\alpha)} (f,\tau)$ & $L_{\OP{H}}^{(\alpha)} (\nu,t)$ & $H^{(\alpha)}(f,\nu)$ \\
-%       \hline
-%       LTI & $q(\tau)$ & $q(\tau) \delta(f)$ & $Q(\nu)$ & $Q(\nu) \delta(\nu-f)$ \\
-%       \hline
-%       LFI & $m(t) \delta(\tau)$ & $M(f) \delta(\tau)$ & $m(t)$ & $M(f)$\\
-%       \hline
-%       identité & $\delta(t)$ & $\delta(f)\delta(\tau)$ & $1$ & $\delta(\nu-f)$\\
-%       \hline
-%     \end{tabular}
-%     \caption{Exemple de tableau.}
-%     \label{tab:un-tableau}
-%   \end{center}
-% \end{table}
+\begin{table}[ht]
+  \begin{center}
+    \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      & $h(t,\tau)$ & $S_{\OP{H}}^{(\alpha)} (f,\tau)$ & $L_{\OP{H}}^{(\alpha)} (\nu,t)$ & $H^{(\alpha)}(f,\nu)$ \\
+      \hline
+      LTI & $q(\tau)$ & $q(\tau) \delta(f)$ & $Q(\nu)$ & $Q(\nu) \delta(\nu-f)$ \\
+      \hline
+      LFI & $m(t) \delta(\tau)$ & $M(f) \delta(\tau)$ & $m(t)$ & $M(f)$\\
+      \hline
+      identité & $\delta(t)$ & $\delta(f)\delta(\tau)$ & $1$ & $\delta(\nu-f)$\\
+      \hline
+    \end{tabular}
+    \caption{Exemple de tableau.}
+    \label{tab:un-tableau}
+  \end{center}
+\end{table}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, 
 \begin{figure}[htp]

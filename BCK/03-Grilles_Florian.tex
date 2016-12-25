@@ -1,0 +1,313 @@
+\section{Les grilles}
+
+\begin{dfn}[Grille]
+Une grille de dimension $d$ possédant $N$ nœuds suivant chaque coordonnée est le produit cartésien de $d$ chaines ($d>1$) de $N$ sommets. On note cette grille $M(N)^d$ que l'on dira \textit{de coté N}.
+\end{dfn}
+
+
+
+
+\begin{rem}
+
+Si l'on considère le produit cartésien de deux graphes, le graphe résultant est tel que :
+\begin{itemize}
+\item l'ensemble de ses nœuds est le produit cartésien des nœuds des deux premiers graphes;
+\item deux de ses nœuds sont voisins s'ils sont composés de nœuds qui étaient voisins dans l'un des deux premiers graphes.
+\end{itemize}
+
+\end{rem}
+
+\begin{ex}
+
+Soient deux chaines composées des nœuds appartenant à l'ensemble $E = \{A, B, C, D\}$. Le produit cartésien de ces deux chaines ($d=2$) de taille $N = Card(E) = 4$ :
+
+\begin{center}
+
+\begin{minipage}[c]{.5\linewidth}
+\begin{minipage}[c]{.2\linewidth}
+
+\begin{tikzpicture}
+\SetGraphUnit{1}
+\GraphInit[vstyle=Normal]
+\Vertex{A}
+\EA(A){B} \EA(B){C} \EA(C){D}
+\Edges(A,B,C,D)
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{.2\linewidth}
+\begin{tikzpicture}
+\SetGraphUnit{1}
+\GraphInit[vstyle=Normal]
+\Vertex{A}
+\SO(A){B} \SO(B){C} \SO(C){D}
+\Edges(A,B,C, D)
+\end{tikzpicture}
+
+\end{minipage}
+\end{minipage}
+\end{center}
+
+A pour résultat la grille $M(4)^2$  : 
+
+\begin{center}
+
+\begin{tikzpicture}
+\SetGraphUnit{1.2}
+\GraphInit[vstyle=Normal]
+\Vertex{AA}
+\EA(AA){BA} \EA(BA){CA} \EA(CA){DA}
+\SO(AA){AB}
+\EA(AB){BB} \EA(BB){CB} \EA(CB){DB}
+\SO(AB){AC}
+\EA(AC){BC} \EA(BC){CC} \EA(CC){DC}
+\SO(AC){AD}
+\EA(AD){BD} \EA(BD){CD} \EA(CD){DD}
+
+\Edges(AA,BA,CA,DA)
+\Edges(AB,BB,CB,DB)
+\Edges(AC,BC,CC,DC)
+\Edges(AD,BD,CD,DD)
+
+\Edges(AA,AB,AC,AD)
+\Edges(BA,BB,BC,BD)
+\Edges(CA,CB,CC,CD)
+\Edges(DA,DB,DC,DD)
+\end{tikzpicture}
+
+\end{center}
+
+\end{ex}
+
+\paragraph{Nombre total de nœuds :}
+
+Il résulte de la définition ci-dessus que le nombre total de nœuds est égal au cardinal du produit cartésien de l'ensemble des nœuds de départ :
+
+$$Card(S)= Card(\underbrace{E \times E \times ... \times E}_{\text{p fois}}) = \prod_1^p Card(E) = N^p$$
+
+$$\text{où } S \text{ est l'ensemble des noeuds de la grille}$$
+
+\paragraph{Nombre total d'arêtes :}
+
+Soit $A$ l'ensemble des arêtes de la grille. Voici pour $N=2$ et $N=4$ le passage de la dimension $1$ aux dimensions supérieures ($2$ et $3$).
+
+
+\begin{center}
+
+\begin{tabular}{cccccc}
+
+&$d = 1$ & & $d = 2$ & & $d = 3$\\ 
+
+$N=2$& 
+
+\begin{minipage}[c]{0.2\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\SetGraphUnit{1}
+\GraphInit[vstyle=Normal]
+\Vertex{A}
+\EA(A){B}
+\Edges(A,B)
+\end{tikzpicture}
+\end{center}
+\end{minipage} 
+
+& $\longrightarrow$ & 
+
+\begin{minipage}[c]{0.2\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\SetGraphUnit{1.2}
+\GraphInit[vstyle=Normal]
+\Vertex{AA}
+\EA(AA){BA}
+\SO(AA){AB}
+\EA(AB){BB}
+
+
+\Edges(AA,BA,BB,AB,AA)
+
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+ 
+& $\longrightarrow$ &
+
+\begin{minipage}[c]{0.2\linewidth}
+\begin{center}
+\resizebox{3cm}{3cm}{
+\begin{tikzpicture}
+\SetGraphUnit{2}
+\GraphInit[vstyle=Normal]
+\Vertex{AAA}
+\EA(AAA){BAA}
+\SO(AAA){ABA}
+\EA(ABA){BBA}
+\Vertex[x=1 , y=1]{AAB}
+\EA(AAB){BAB}
+\SO(AAB){ABB}
+\EA(ABB){BBB}
+
+
+\Edges(AAA,BAA,BBA,ABA,AAA)
+\Edges(AAA,AAB,BAB,BAA)
+\Edges(ABA,ABB,BBB,BBA)
+\Edges(AAB,ABB)
+\Edges(BAB,BBB)
+
+\end{tikzpicture}}
+\end{center}
+\end{minipage}
+
+\\ 
+
+ & $Card(A) = 1$ & & $Card(A) = 4$ & & $Card(A) = 12$ \\
+ &  & & & & \\
+
+$N = 3$ &
+
+\begin{minipage}[c]{0.2\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\SetGraphUnit{1}
+\GraphInit[vstyle=Normal]
+\Vertex{A}
+\EA(A){B} \EA(B){C}
+\Edges(A,B,C)
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+
+&
+$\longrightarrow$
+& 
+\begin{minipage}[c]{0.2\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\SetGraphUnit{1.2}
+\GraphInit[vstyle=Normal]
+\Vertex{AA}
+\EA(AA){BA} \EA(BA){CA}
+\SO(AA){AB}
+\EA(AB){BB} \EA(BB){CB}
+\SO(AB){AC}
+\EA(AC){BC} \EA(BC){CC}
+
+
+\Edges(AA,BA,CA)
+\Edges(AB,BB,CB)
+\Edges(AC,BC,CC)
+
+\Edges(AA,AB,AC)
+\Edges(BA,BB,BC)
+\Edges(CA,CB,CC)
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+
+& $\longrightarrow$ &
+
+\begin{minipage}[c]{0.2\linewidth}
+\begin{center}
+\resizebox{3.5cm}{3.5cm}{
+\begin{tikzpicture}
+\GraphInit[vstyle=Normal]
+\SetGraphUnit{2.5}
+%\draw[help lines] (0,-3) grid (2,2);
+
+\Vertex[x=2 , y=-3]{ACC}
+\EA(ACC){BCC} \EA(BCC){CCC}
+\Edges(ACC,BCC,CCC)
+
+\Vertex[x=1 , y=-4]{ACB}
+\EA(ACB){BCB} \EA(BCB){CCB}
+\Edges(ACB,BCB,CCB)
+
+\Vertex[x=2 , y=-0.5]{ABC}
+\EA(ABC){BBC} \EA(BBC){CBC}
+\Edges(ABC,BBC,CBC)
+
+\Vertex[x=1 , y=-1.5]{ABB}
+\EA(ABB){BBB} \EA(BBB){CBB}
+\Edges(ABB,BBB,CBB)
+
+\Vertex[x=2 , y=2]{AAC}
+\EA(AAC){BAC} \EA(BAC){CAC}
+\Edges(AAC,BAC,CAC)
+
+\Vertex[x=1 , y=1]{AAB}
+\EA(AAB){BAB} \EA(BAB){CAB}
+\Edges(AAB,BAB,CAB)
+
+\Vertex{AAA}
+\EA(AAA){BAA} \EA(BAA){CAA}
+\Edges(AAA,BAA,CAA)
+
+\SO(AAA){ABA} \EA(ABA){BBA} \EA(BBA){CBA}
+
+\SO(ABA){ACA} \EA(ACA){BCA} \EA(BCA){CCA}
+\Edges(ABA,ABB,ABC)
+\Edges(BBA,BBB,BBC)
+\Edges(CBA,CBB,CBC)
+\Edges(AAA,AAB,AAC)
+\Edges(BAA,BAB,BAC)
+\Edges(CAA,CAB,CAC)
+\Edges(ABA,BBA,CBA)
+\Edges(ACA,BCA,CCA)
+\Edges(AAA, ABA, ACA,ACA,ACB,ACC, ABC, AAC)
+\Edges(BAA, BBA,BCA,BCB,BCC,BBC, BAC)
+\Edges(CAA, CBA, CCA,CCB,CCC, CBC, CAC)
+\Edges(CAB,CBB,CCB)
+\Edges(BAB,BBB,BCB)
+\Edges(AAB,ABB,ACB)
+\end{tikzpicture}
+}
+\end{center}
+\end{minipage}\\
+
+ & $Card(A) = 2$ & & $Card(A) = 12$ & & $Card(A) = 54$ \\
+
+
+\end{tabular}
+
+\end{center}
+
+On remarque à présent que, pour $N$ fixé, le passage d'une dimension $d$ à une dimension $d+1$ se fait en deux étapes :
+\begin{itemize}
+\item on "copie" $N$ fois la grille de dimension $d$;
+\item on relie, par une arête, les nœuds de la grille $1$ avec les nœuds correspondants de la grille $2$ puis les nœuds de la grille $2$ avec les nœuds correspondants de la grille $3$, et ainsi de suite jusqu'à la grille $N$.
+
+Cette méthode de construction nous donne une relation de récurrence pour le nombre d'arêtes : 
+
+$$Card(A)_{d+1} = \underbrace{N \times Card(A)_d}_{\text{On copie }N\text{ fois la grille de dimension }d} + \underbrace{(N-1)\times Card(S)_d}_{\text{On relie les arêtes de chaque grille}}$$
+
+On ne peut aisément déterminer une expression générale de la suite ci-dessus. Or, les exemples précédents nous permettent de déduire une expression du nombre d'arêtes en fonction de $d$ et de $N$ : 
+
+$$Card(A)_d = d\times (N-1)\times N^{d-1}$$
+
+Nous pouvons démontrer par récurrence cette expression.
+
+\begin{proof}[Preuve de la relation]
+\item
+\paragraph{Initialisation :} 
+Pour $d=1$, on a $Card(A)_1 = 1\times (N-1)\times N^{1-1} = N-1$ ce qui correspond bien au nombre d'arêtes dans une chaine.
+
+\paragraph{Hypothèse de récurrence :}
+On fait l'hypothèse qu'il existe un rang $d$ tel que $Card(A)_d = d\times (N-1)\times N^{d-1}$. Montrons que cette relation est vraie au rang $d+1$.
+
+\paragraph{Hérédité :} Nous avons :
+\begin{align*}
+Card(A)_{d+1} & = N \times Card(A)_d + (N-1)\times N^d \\
+& = N\times d\times (N-1)\times N^{d-1} + N^d\times (N-1)\\
+& = N^d\times d\times (N-1) + N^d\times (N-1)\\
+& = (d+1)\times (N-1)\times N^d
+\end{align*}
+
+Nous retrouvons bien l'hypothèse de récurrence au rang $d+1$. On en déduit que $\forall d \in \mathbb{N^*}$, on a $Card(A)_d = d\times (N-1)\times N^{d-1}$.
+\end{proof}
+
+D'après l'ensemble des éléments qui précèdent, le nombre d'arêtes d'une grille est telle que :
+
+$$\forall d \in \mathbb{N^*} \text{, }Card(A)_d = d\times (N-1)\times N^{d-1} $$ 
+
+\end{itemize}

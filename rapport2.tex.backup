@@ -48,7 +48,7 @@
    Nicolas Holvoet
     }
 \date{\today}
-\makeindex
+% \makeindex
 
 \theoremstyle{definition}
 \newtheorem*{dfn}{Définition}
