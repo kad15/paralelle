@@ -1,4 +1,5 @@
 # latex
+*.backup
 *.aux
 *.glo
 *.idx
