@@ -64,34 +64,39 @@ d'utiliser une heuristique visant à guider les choix locaux. Ce qui nous amène
 % \end{figure}
 \paragraph{Algorithme A* : }
 
-A* est l'algorithme qu'on utilise intuitivement pour se déplacer d'un enddroit à un autre dans une ville
+Cet algorithme a été proposé pour la première fois 
+par Peter E. Hart, Nils John Nilsson et Bertram Raphael
+en 1968. Il s'agit d'une extension de l'algorithme de Dijkstra et s'applique comme ce dernier
+à des graphes munis d'une distance positive. A* ne teste pas tous les chemins ; il ne fournit donc
+qu'un des meilleurs chemins. A* est très performant dans le cas où le graphe comporte une faible densité de noeuds 
+mais pas ou peu efficace dans le cas de parcours de labyrinthes par exemple.
+
+A* est l'algorithme qu'on utilise intuitivement pour se déplacer d'un point de départ D vers un point d'arrivée A dans une ville
 connaissant la direction à prendre. Grâce à cette information supplémentaire, A* va privilégier le noeud qui minimise 
 la somme de la distancce déjà parcourue et de la distance estimée restant à parcourir qui sera ici la distance à vol d'oiseau.
 
 
-Cet algorithme a été proposé pour la première fois 
-par Peter E. Hart, Nils John Nilsson et Bertram Raphael
-en 1968. Il s'agit d'une extension de l'algorithme de Dijkstra et s'applique comme ce dernier
-à des graphes munis d'une distance positive. En outre, A* ne teste pas tous les chemins ; il ne fournit donc
-qu'un des meilleurs chemins. A* est cependant très performant dans le cas où le graphe comporte une faible densité de noeuds 
-mais pas ou peu efficace dans le cas de parcours de labyrinthes par exemple.
-
-
-Il faut donc choisir, en fonction du problème, une heuristique h, c'est à dire ici une fonction qui estime la distance 
-restante entre chaque noeud et l'arrivée, estimation par défaut qui ne doit jamais surestimer cette distance. 
+IL faut donc déterminer, en fonction du problème, une façon d'estimer la distance restante entre chaque noeud
+et l'arrivée, estimation par défaut qui ne doit jamais surestimer cette distance. 
 La précision du résultat final dépendra de la précision de l'estimation.
 On peut citer les fonctons estimatrices suivantes :  la distance euclidienne (norme 2) ou à ``vol d'oiseau'' déjà citée 
 et la distance de Manhattan (norme 1) qui, sur une grille, correspond à la somme des cases verticales et horizontales
 qui sépare le position courante de l'arrivée. Les deux distances sont utilisables dans A* car elles sous-estiment
-la distance à l'arrivée.
+la distance
+
+on mémorise  la longueur minimale pour arriver à un noeud et son prédécesseur. 
+La liste des noeuds restant à visiter est aussi mémorisée et pour chaque noeud la
+distance estimée à l'arrivée.
+
+Parmi les noeuds non encore visités, on choisit celui dont la somme f = g + h de la distance
+parcourue depuis l'origine g et de la distance estimée, i.e notre heuristique h, à l'arrivée est la plus faible.
+Ainsi, si on se trouve au noeud n distant de l'origine disons de 50 et connecté par exemple aux seuls noeuds i, j parmi lesquels on doit faire un choix, 
+si on suppose que la distance entre n et i est 5 et celle entre n et j est 10, si on se déplace en i on aura une distance gi = 50 + 5 = 55 et gj = 50 + 10 = 60
+si on se déplace en j
 
 
-A chaque étapes, l'algorithme calcule g , la distance déjà parcourue pour chaque noeud n non visité puis
-la fonction f(n) = g(n) + h(n). Le noeud sélectionné est celui pour lequel f(n) est minimale.
 
-
-
-
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse l
 \paragraph{Utilisation}
 
 Dijkstra est utilisé dans le routage dynamique OSPF, on peut donc envisager optimiser un réseau
@@ -118,13 +123,13 @@ Comment les utiliser pour transférer de façon optimale une donnée d'un noeud 
 %   \end{center}
 % \end{table}
 
-
-% \begin{figure}[htp]
-%   \centering
-%   \includegraphics[width=4cm]{images/bitmap_image}
-%   \caption{Exemple d'image au format JPG.}
-%   \label{fig:une-autre-image}
-% \end{figure}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, 
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=4cm]{images/bitmap_image}
+  \caption{Exemple d'image au format JPG.}
+  \label{fig:une-autre-image}
+\end{figure}
 
 
 %%% Local Variables: 

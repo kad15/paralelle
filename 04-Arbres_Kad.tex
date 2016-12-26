@@ -1,1 +1,13 @@
 \section{Les arbres et grilles d'arbres}
+
+\paragraph{Diamètre : } Un arbre est constitué d'un ensemble de niveaux, le niveau 0 étant occupé par la racine de l'arbre.
+Les niveaux se répartissent donc de 0 à h où h est par définition la hauteur de l'arbre. Chaque niveau i est occupé 
+par $k^{i}$  noeuds dans un arbre k-naire. Un arbre binaire complet aura donc n = $2^{h}$ feuilles qui représente aussi le nombre de processeurs. 
+La plus grande distance entre deux noeuds, ie. le diamètre de l'arbre, est donc le nombre d'arrêtes du chemin passant par la racine et joignant deux feuilles donc D = 2h = 2 * log2 n. 
+
+% $a_{n}^{m}$
+
+\paragraph{Bissection : } La bissection est le nombre minimal d'arrêtes à supprimer pour qu'un graphe initialement
+connexe se sépare en deux composantes connexes posédant le même nombre de noeuds à une unité près.
+Pour un arbre binaire, ce nombre minimal est obtenu en supprimant une des deux arrêtes liées à la racine. On trouve
+donc dans ce cas une bissection égale à 1.
