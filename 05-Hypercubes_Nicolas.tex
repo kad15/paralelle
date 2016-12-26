@@ -1,3 +1,149 @@
 \section{Les hypercubes}
 
-test push
+Un hypercube est une grille de dimension $d$ ne possédant que deux sommets selon chaque coordonnée. Ainsi, il possède $2^d$ nœuds de degré $d$. On construit un hypercube de dimension $d$ récursivement à partir de deux hypercubes de dimension $d-1$ en connectant les sommets similaires, un hypercube de dimension 0 correspondant à un nœud de calcul unique. On obtient ainsi ces quatre premières grilles :
+
+\begin{center}
+
+\begin{tabular}{ccccccccc}
+
+$d = 0$ & & $d = 1$ & & $d = 2$ & & $d = 3$ & & $d = 4$ \\ 
+
+\begin{minipage}[c]{0.05\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\SetGraphUnit{1}
+\GraphInit[vstyle=Normal]
+\SetUpVertex[FillColor=blue!20]
+\Vertex{}
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+
+& $\longrightarrow$ & 
+
+\begin{minipage}[c]{0.05\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\SetGraphUnit{1}
+\GraphInit[vstyle=Normal]
+\SetUpVertex[FillColor=blue!20]
+\Vertex{0}
+\SetUpVertex[FillColor=red!20]
+\SO(0){1}
+\Edges(0,1)
+\end{tikzpicture}
+\end{center}
+\end{minipage} 
+
+& $\longrightarrow$ & 
+
+\begin{minipage}[c]{0.1\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\SetGraphUnit{1.2}
+\GraphInit[vstyle=Normal]
+\SetUpVertex[FillColor=blue!20]
+\Vertex{00}
+\SO(00){01}
+\SetUpVertex[FillColor=red!20]
+\EA(00){10}
+\EA(01){11}
+\Edges(00,10,11,01,00)
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+ 
+& $\longrightarrow$ &
+
+\begin{minipage}[c]{0.15\linewidth}
+\begin{center}
+\resizebox{3cm}{3cm}{
+\begin{tikzpicture}
+\SetGraphUnit{2}
+\GraphInit[vstyle=Normal]
+\SetUpVertex[FillColor=blue!20]
+\Vertex{000}
+\EA(000){010}
+\SO(000){001}
+\EA(001){011}
+\SetUpVertex[FillColor=red!20]
+\Vertex[x=1 , y=1]{100}
+\EA(100){110}
+\SO(100){101}
+\EA(101){111}
+\Edges(000,010,011,001,000)
+\Edges(000,100,110,010)
+\Edges(001,101,111,011)
+\Edges(100,101)
+\Edges(110,111)
+\end{tikzpicture}}
+\end{center}
+\end{minipage}
+
+& $\longrightarrow$ &
+
+\begin{minipage}[c]{0.3\linewidth}
+\begin{center}
+\resizebox{6cm}{6cm}{
+\begin{tikzpicture}
+\SetGraphUnit{2}
+\GraphInit[vstyle=Normal]
+\SetUpVertex[FillColor=blue!20]
+\Vertex{0000}
+\EA(0000){0010}
+\SO(0000){0001}
+\EA(0001){0011}
+\Vertex[x=1 , y=1]{0100}
+\EA(0100){0110}
+\SO(0100){0101}
+\EA(0101){0111}
+\Edges(0000,0010,0011,0001,0000)
+\Edges(0000,0100,0110,0010)
+\Edges(0001,0101,0111,0011)
+\Edges(0100,0101)
+\Edges(0110,0111)
+
+\SetUpVertex[FillColor=red!20]
+\Vertex[x=-3.5 , y=2]{1000}
+\SetGraphUnit{9}
+\EA(1000){1010}
+\SetGraphUnit{6}
+\SO(1000){1001}
+\SetGraphUnit{9}
+\EA(1001){1011}
+\SetGraphUnit{6}
+\Vertex[x=-2 , y=3.5]{1100}
+\SetGraphUnit{9}
+\EA(1100){1110}
+\SetGraphUnit{6}
+\SO(1100){1101}
+\SetGraphUnit{9}
+\EA(1101){1111}
+\Edges(1000,1010,1011,1001,1000)
+\Edges(1000,1100,1110,1010)
+\Edges(1001,1101,1111,1011)
+\Edges(1100,1101)
+\Edges(1110,1111)
+
+\Edges(1000,0000)
+\Edges(1100,0100)
+\Edges(1001,0001)
+\Edges(1101,0101)
+\Edges(1011,0011)
+\Edges(1111,0111)
+\Edges(1010,0010)
+\Edges(1110,0110)
+
+\end{tikzpicture}}
+\end{center}
+\end{minipage}
+\end{tabular}
+\end{center}
+
+On étiquette généralement les nœuds par une séquence de $d$ bits. Pour construire un hypercube de dimension $d$, on part d'un hypercube de dimension $d-1$ dont les sommets auront été préfixés d'un 0 (en bleu sur la figure) puis on ajoute un hypercube de dimension $d-1$ dont les sommets auront été préfixés d'un 1 (en rouge). On a alors deux propriétés intéressantes :
+
+\begin{itemize}
+\item Chaque bit correspond à une dimension de l'hypercube. Ainsi, dans notre exemple $d=3$ et par construction, le premier bit (en partant de la droite) correspond à la coordonnée classique $z$ (apparue dans l'hypercube $d=1$), le deuxième correspond à la coordonnée $y$ (issue de l'hypercube $d=2$) et enfin le premier à $x$. Les étiquettes ont donc une forme « $xyz$ ».
+\item Un nœud est voisin d'un autre nœud si et seulement si leurs étiquettes diffèrent d'un seul bit.
+
+\end{itemize}
