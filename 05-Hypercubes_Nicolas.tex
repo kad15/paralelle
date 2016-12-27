@@ -1,14 +1,13 @@
 \section{Les hypercubes}
 
-Un hypercube est une grille de dimension $d$ ne possédant que deux sommets selon chaque coordonnée. Ainsi, il possède $2^d$ nœuds de degré $d$. On construit un hypercube de dimension $d$ récursivement à partir de deux hypercubes de dimension $d-1$ en connectant les sommets similaires, un hypercube de dimension 0 correspondant à un nœud de calcul unique. On obtient ainsi ces quatre premières grilles :
-
+Un hypercube est une grille de dimension $d$ ne possédant que deux sommets selon chaque coordonnée. Ainsi, il possède $2^d$ nœuds de degré $d$ et $d2^{d-1}$ arêtes. On construit un hypercube de dimension $d$ récursivement à partir de deux hypercubes de dimension $d-1$ en connectant les sommets similaires, un hypercube de dimension 0 correspondant à un nœud de calcul unique. On obtient ainsi ces quatre premières grilles :
+\\
+\begin{figure}[!h]
 \begin{center}
-
+\hspace*{-1.2in}
 \begin{tabular}{ccccccccc}
-
-$d = 0$ & & $d = 1$ & & $d = 2$ & & $d = 3$ & & $d = 4$ \\ 
-
-\begin{minipage}[c]{0.05\linewidth}
+~~	$d = 0$ & & ~~ $d = 1$ & & ~~~$d = 2$ & & $d = 3$ & & ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~$d = 4$ \\ 
+\begin{minipage}[c]{0.02\linewidth}
 \begin{center}
 \begin{tikzpicture}
 \SetGraphUnit{1}
@@ -20,8 +19,7 @@ $d = 0$ & & $d = 1$ & & $d = 2$ & & $d = 3$ & & $d = 4$ \\
 \end{minipage}
 
 & $\longrightarrow$ & 
-
-\begin{minipage}[c]{0.05\linewidth}
+\begin{minipage}[c]{0.02\linewidth}
 \begin{center}
 \begin{tikzpicture}
 \SetGraphUnit{1}
@@ -36,7 +34,6 @@ $d = 0$ & & $d = 1$ & & $d = 2$ & & $d = 3$ & & $d = 4$ \\
 \end{minipage} 
 
 & $\longrightarrow$ & 
-
 \begin{minipage}[c]{0.1\linewidth}
 \begin{center}
 \begin{tikzpicture}
@@ -54,8 +51,7 @@ $d = 0$ & & $d = 1$ & & $d = 2$ & & $d = 3$ & & $d = 4$ \\
 \end{minipage}
  
 & $\longrightarrow$ &
-
-\begin{minipage}[c]{0.15\linewidth}
+\begin{minipage}[c]{0.17\linewidth}
 \begin{center}
 \resizebox{3cm}{3cm}{
 \begin{tikzpicture}
@@ -81,10 +77,9 @@ $d = 0$ & & $d = 1$ & & $d = 2$ & & $d = 3$ & & $d = 4$ \\
 \end{minipage}
 
 & $\longrightarrow$ &
-
 \begin{minipage}[c]{0.3\linewidth}
 \begin{center}
-\resizebox{6cm}{6cm}{
+\resizebox{8cm}{6.5cm}{
 \begin{tikzpicture}
 \SetGraphUnit{2}
 \GraphInit[vstyle=Normal]
@@ -139,11 +134,55 @@ $d = 0$ & & $d = 1$ & & $d = 2$ & & $d = 3$ & & $d = 4$ \\
 \end{minipage}
 \end{tabular}
 \end{center}
+\caption{Les hypercubes de dimension 0, 1, 2, 3 et 4}
 
-On étiquette généralement les nœuds par une séquence de $d$ bits. Pour construire un hypercube de dimension $d$, on part d'un hypercube de dimension $d-1$ dont les sommets auront été préfixés d'un 0 (en bleu sur la figure) puis on ajoute un hypercube de dimension $d-1$ dont les sommets auront été préfixés d'un 1 (en rouge). On a alors deux propriétés intéressantes :
+\end{figure}
+
+
+On étiquette généralement les nœuds par une séquence de $d$ bits. Pour étiqueter un hypercube de dimension $d$, on part d'un hypercube de dimension $d-1$ dont les sommets auront été préfixés d'un 0 (en bleu sur la figure) puis on ajoute un hypercube de dimension $d-1$ dont les sommets auront été préfixés d'un 1 (en rouge). On a alors deux propriétés intéressantes :
 
 \begin{itemize}
-\item Chaque bit correspond à une dimension de l'hypercube. Ainsi, dans notre exemple $d=3$ et par construction, le premier bit (en partant de la droite) correspond à la coordonnée classique $z$ (apparue dans l'hypercube $d=1$), le deuxième correspond à la coordonnée $y$ (issue de l'hypercube $d=2$) et enfin le premier à $x$. Les étiquettes ont donc une forme « $xyz$ ».
-\item Un nœud est voisin d'un autre nœud si et seulement si leurs étiquettes diffèrent d'un seul bit.
-
+\item Chaque bit correspond à une dimension de l'hypercube. Ainsi, dans notre exemple $d=3$ et par construction, le premier bit (en partant de la droite) correspond à la coordonnée classique $z$ (apparue dans l'hypercube $d=1$), le deuxième correspond à la coordonnée $y$ (issue de l'hypercube $d=2$) et enfin le troisième à $x$. On peut donc voir les étiquettes sous une forme « $xyz$ ».
+\item Un nœud est voisin d'un autre nœud si et seulement si leurs étiquettes diffèrent d'un seul bit. Ainsi, la distance entre deux nœuds correspond à la distance de Hamming de leurs étiquettes.
 \end{itemize}
+
+\paragraph{}
+Ces propriétés permettent d'implémenter un algorithme de routage très simple dans lequel un message transite via les nœuds dont les étiquettes se rapprochent à chaque étape d'un bit de l'étiquette destination, en évaluant par exemple une à une les dimensions à l'aide d'une opération XOR.
+
+\paragraph{Diamètre} Comme nous l'avons vu pour les grilles, le diamètre d'un hypercube de dimension d correspond à la distance entre le nœud $\underbrace{(0,0,…,0)}_{d \text{ fois}}$ et le nœud $\underbrace{(1,1,…,1)}_{d \text{ fois}}$ qui, compte tenu de la deuxième propriété énoncée ci-dessus, est égale à $d$.
+
+\paragraph{Bissection} D'après les résultats obtenus sur les grilles, la bissection d'un hypercube de dimension $d$ est de $2^{d-1}$ (on partitionne l'hypercube en deux hypercubes de dimension $d-1$ en retirant les $2^{d-1}$ arêtes qui ont permis de les lier).
+
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.25]{images/q9.pdf}
+\caption{Une projection de l'\textit{enneract} (9-hypercube)}
+\end{figure}
+
+\newpage
+
+\subsection{Comparaison des différentes architectures}
+
+À partir des résultats précédents, on peut manipuler les équations pour obtenir une estimation du diamètre, du degré des sommets, du nombre d'arêtes et de la bissection des différentes architectures étudiées jusqu'ici, directement en fonction du nombre de nœuds de calcul.
+
+\begin{figure}[!h]
+\begin{center}
+\begin{tabular}{l|l|l|l|l}
+Architecture & Diamètre & Degré & Nombre d'arêtes & Bissection \\ 
+\toprule
+Graphe complet & $1$ & $n-1$ & $\frac{n(n-1)}{2}$ & $\approx \frac{n^2}{4}$ \\ 
+Grille de dimension $d$ & $d(n^{1/d}-1)$ & $2d$ & $dn(1-n^{-1/d})$ & $\approx n^{1-1/d}$ \\
+Grille de dimension $2$ & $2(\sqrt{n}-1)$ & $4$ & $2(n-\sqrt{n})$ & $\approx \sqrt{n}$ \\ 
+Grille d'arbres bidimensionnelle & • &  • & • & • \\ 
+Hypercube & $\log_2 n$ & $\log_2 n$ & $n\log_2 n\frac{1}{2}$ & $\frac{n}{2}$ \\ 
+\end{tabular}
+\end{center}
+\caption{Comparaison des architectures pour $n$ nœuds}
+\end{figure}
+
+On constate que l'hypercube offre les meilleurs diamètres et bissection, au détriment d'un degré non constant et d'arêtes plus nombreuses et plus longues par rapport à une grille classique, ce qui implique un câblage plus complexe et coûteux. Cela reste néanmoins une architecture de choix à l'heure actuelle.
+
+\subsection{Implémentation du tri fusion}
+
+\subsection{Quelques autres exemples d'algorithmes}
