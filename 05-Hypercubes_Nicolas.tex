@@ -157,7 +157,7 @@ Ces propriétés permettent d'implémenter un algorithme de routage très simple
 \begin{figure}[!h]
 \centering
 \includegraphics[scale=0.25]{images/q9.pdf}
-\caption{Une projection de l'\textit{enneract} (9-hypercube)}
+\caption{Une projection de l'\textit{enneract} (9-cube)}
 \end{figure}
 
 \newpage
@@ -181,8 +181,30 @@ Hypercube & $\log_2 n$ & $\log_2 n$ & $n\log_2 n\frac{1}{2}$ & $\frac{n}{2}$ \\
 \caption{Comparaison des architectures pour $n$ nœuds}
 \end{figure}
 
-On constate que l'hypercube offre les meilleurs diamètres et bissection, au détriment d'un degré non constant et d'arêtes plus nombreuses et plus longues par rapport à une grille classique, ce qui implique un câblage plus complexe et coûteux. Cela reste néanmoins une architecture de choix à l'heure actuelle.
+On constate que l'hypercube offre les meilleurs diamètre et bissection, au détriment d'un degré non constant et d'arêtes plus nombreuses et plus longues par rapport à une grille classique, ce qui implique un câblage plus complexe et coûteux. Cela reste néanmoins une architecture de choix à l'heure actuelle.
+
+\subsection{Template classique}
+
+On trouve dans \cite{FOSTER} un \textit{template} classique s'adaptant à de nombreux problèmes SIMD implémentés sur un hypercube :
+
+\begin{algorithm}
+\caption{hypercube($task\_id$, $n$, $input$, $output$)}
+\begin{algorithmic}
+\REQUIRE $task\_id$, $n$, $input$, $output$
+\STATE $state \leftarrow input$
+\FOR{$i = 0$ \TO $\log_2 n - 1$}
+\STATE $dest \leftarrow task\_id \oplus 2^i$
+\STATE $\text{send}(dest, state)$
+\STATE $message \leftarrow \text{receive}(dest)$
+\STATE $state \leftarrow \text{OP}(state, message)$
+\ENDFOR
+\STATE $output \leftarrow state$
+\end{algorithmic}
+\end{algorithm}
+
+Cette procédure est exécutée par chacune des $n$ tâches. On renseigne l'étiquette du nœud avec $task\_id$ et son état initial avec $input$. Puis la tâche communique avec ses $\log_2 n$ voisins qu'elle identifie simplement avec une opération XOR sur chaque dimension comme décrit précédemment. Elle envoie son état courant à son voisin et reçoit de ce dernier un message, un état. La tâche met à jour son état en effectuant une opération « OP » combinant son état courant et l'information reçue de son voisin. Finalement, le dernier état constitue le résultat pour la tâche $task\_id$.
 
 \subsection{Implémentation du tri fusion}
+
 
 \subsection{Quelques autres exemples d'algorithmes}

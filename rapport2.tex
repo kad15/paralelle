@@ -23,8 +23,18 @@
 \usepackage[table]{xcolor}
 \usepackage{ltablex}
 \usepackage{float}
-\usepackage{url}
-
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=black,       % color of internal links
+    citecolor=purple,       % color of links to bibliography
+    urlcolor=blue          % color of external links
+}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\floatname{algorithm}{Procédure}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
 % \usepackage{minted}
 
 \usepackage[titletoc,toc,title,page]{appendix}
@@ -80,4 +90,8 @@
 \include{03-Grilles_Florian}
 \include{04-Arbres_Kad}
 \include{05-Hypercubes_Nicolas}
+
+\addcontentsline{toc}{section}{Références}
+\bibliographystyle{alpha}
+\bibliography{rapport}
 \end{document}
