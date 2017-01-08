@@ -1,13 +1,85 @@
 \section{Les arbres et grilles d'arbres}
 
-\paragraph{Diamètre : } Un arbre est constitué d'un ensemble de niveaux, le niveau 0 étant occupé par la racine de l'arbre.
-Les niveaux se répartissent donc de 0 à h où h est par définition la hauteur de l'arbre. Chaque niveau i est occupé 
-par $k^{i}$  noeuds dans un arbre k-naire. Un arbre binaire complet aura donc n = $2^{h}$ feuilles qui représente aussi le nombre de processeurs. 
-La plus grande distance entre deux noeuds, ie. le diamètre de l'arbre, est donc le nombre d'arrêtes du chemin passant par la racine et joignant deux feuilles donc D = 2h = 2 * log2 n. 
+\subsection{Les arbres binaires}
+\paragraph{Diamètre d'un arbre binaire: } Un arbre est constitué d'un ensemble de niveaux, le niveau 0 étant occupé par la racine de l'arbre.
+Les niveaux se répartissent donc de 0 à p où p est par définition la hauteur ou la profondeur de l'arbre. Chaque niveau i est occupé 
+par $k^{i}$  noeuds dans un arbre k-naire, par $2^{i}$ pour un arbre binaire. 
+Par conséquent, à la profondeur p, un arbre binaire complet aura donc $f = 2^{p}$ 
+feuilles. Un arbre binaire complet sera constitué de $2^{p+1}-1 = 2f-1$ noeuds y compris les feuilles.
+La plus grande distance entre deux noeuds, ie. le diamètre de l'arbre, est donc le nombre d'arrêtes 
+du chemin passant par la racine et joignant deux feuilles. Ce qui donne : \[D = 2p = 2\log_2(f)\]
+
+
+puisque la profondeur est liée au nombre de feuilles par \[p = \log_2(f)\]
 
 % $a_{n}^{m}$
 
-\paragraph{Bissection : } La bissection est le nombre minimal d'arrêtes à supprimer pour qu'un graphe initialement
-connexe se sépare en deux composantes connexes posédant le même nombre de noeuds à une unité près.
-Pour un arbre binaire, ce nombre minimal est obtenu en supprimant une des deux arrêtes liées à la racine. On trouve
+\paragraph{Bissection d'un arbre binaire : } La bissection est le nombre minimal d'arrêtes à supprimer pour qu'un graphe initialement
+connexe se sépare en deux composantes connexes possédant le même nombre de noeuds à une unité près.
+Pour un arbre binaire, ce nombre minimal est obtenu en supprimant une des deux arrêtes liée à la racine. On trouve
 donc dans ce cas une bissection égale à 1.
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=10cm]{images/gda}
+  \caption{Grille d'arbre 2-D construite sur une grille $N \times N$ avec N = 4 (a) à laquelle on connecte 4 arbres binaires horizontaux (b) et 
+  4 arbres binaires verticaux (c) pour obtenir la grille d'arbres (d).}
+  \label{fig:gda}
+\end{figure}
+\subsection{Les grilles d'arbres}
+
+\paragraph{Définition d'une grille d'arbre bidimensionnelle :}
+Une grille d'arbre bidimensionnelle, Mesh Of Trees en anglais ou MOT en abrégé, est construite à partir d'une grille
+bidimensionnelle reliée par des arbres binaires verticalement et horizontalement comme illustré figure \ref{fig:gda}.
+Les noeuds de la grille constituent les feuilles des arbres. On a donc $2N$ arbres de profondeur $p = \log_2(N) = 2$.
+Chacun des $2N$ arbres est composé de $(N-1)$ noeuds internes et de $N$ feuilles. On a donc un nombre total de noeuds dans la grille
+d'arbres égal à la somme des noeuds de la grille $N \times N$, soit $N^2$ et du nombre total des noeuds ajoutés par les arbres, soit $2N(N-1)$. 
+Une grille d'arbres $N\times N$ est donc composée de $3N^2 - 2N$ noeuds.
+
+
+
+\paragraph{Diamètre d'un arbre binaire: } Le diamètre est la distance ``diagonale'' entre le noeud supérieur gauche et inférieur droit. La géométrie
+carrée implique que cette distance est le double de la distance qui sépare le noeud supérieur gauche et le noeud inférieur gauche. Or ces 2
+noeuds sont les feuilles d'un arbre binaire qui compte N feuilles donc dont le diamètre est $D = 2p = 2\log_2(N)$. \textbf{Le diamètre d'une grille d'arbre}
+est donc : \[D' = 4\log_2(N)\] 
+
+\paragraph{Bissection d'une grille d'arbres : } La figure \ref{fig:gda} (c) montre qu'en déconnectant les N = 4 racines des arbres verticaux, 
+on aboutit à deux sous-réseaux de même taille si on affecte une fois sur deux les noeuds racines ainsi déconnectés au
+sous-réseau supérieur puis au sous réseau inférieur. \textbf{La bissection est donc N}.
+
+\paragraph{Bilan : } Les grilles d'arbres sont des architectures performantes car elles jouissent à la fois d'un diamètre faible, donc de connexions 
+plus rapides et directes, et d'une bissection élevée, donc d'une connectivité élevée entre deux parties de la structure. 
+Ce qui implique un effet ``goulot d'étranglement'' moins important que dans d'autres architectures.
+Elles sont en particulier plus efficace que les grilles ou les arbres simples.
+
+
+
+
+\subsection{Implémentation du produit matrice-vecteur sur une grille d'arbres : }
+
+On suppose qu'on dispose d'une grille d'arbres $N \times N$ sur laquelle on cherche à effectuer le produit matrice-vecteur Y = AX où $A = (a_{ij})$, $X = (x_i)$
+et $Y=y_j$ avec $0\leq i,j\leq N-1$. 
+
+
+\begin{enumerate}
+ \item On introduit $x_i$ par la racine de l'arbre horizontal $i$ non représenté sur la figure \ref{fig:gda2}(b), $0\leq i\leq N-1$. 
+ \item Les $x_i$ sont transmis aux feuilles au travers des arbres horizontaux de telle 
+ sorte que chaque feuille de l'arbre de la ligne $i$ 
+ reçoit $x_i$ à l'étape $\log N$.
+ \item On introduit $(a_{ij})$ dans la feuille $(i,j)$ via les entrées $I_i$ à l'étape $\log N$. 
+ \item La feuille $(i,j)$ peut alors calculer le produit $a_{ij}x_j$.
+ \item Les résultats sont sommés vers la racine des arbres verticaux.
+\end{enumerate}
+
+
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=15cm]{images/gda2}
+  \caption{Grille d'arbres pour illustrer le principe du calcul d'un produit matrice-vecteur.}
+  \label{fig:gda2}
+\end{figure}
+
+
+Après $2\log N$ étapes, la valeur \[y_i = \sum_{j=1}^{N} a_{ij}x_j\] est disponible dans 
+la racine de la $i^{eme}$ colonne désignée par $O_i$ sur la figure \ref{fig:gda2} (b). 
