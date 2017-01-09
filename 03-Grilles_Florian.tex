@@ -31,7 +31,7 @@ Soient deux chaines composées des nœuds appartenant à l'ensemble $E = \{A, B,
 \GraphInit[vstyle=Normal]
 \Vertex{A}
 \EA(A){B} \EA(B){C} \EA(C){D}
-\Edges(A,B,C,D)
+\Edges[color=red](A,B,C,D)
 \end{tikzpicture}
 \end{minipage}
 \hfill
@@ -51,7 +51,7 @@ Soient deux chaines composées des nœuds appartenant à l'ensemble $E = \{A, B,
 A pour résultat la grille $M(4)^2$  : 
 
 \begin{center}
-
+\begin{minipage}[c]{.2\linewidth}
 \begin{tikzpicture}
 \SetGraphUnit{1.2}
 \GraphInit[vstyle=Normal]
@@ -74,7 +74,7 @@ A pour résultat la grille $M(4)^2$  :
 \Edges(CA,CB,CC,CD)
 \Edges(DA,DB,DC,DD)
 \end{tikzpicture}
-
+\end{minipage}
 \end{center}
 
 \end{ex}
@@ -107,7 +107,7 @@ $N=2$&
 \GraphInit[vstyle=Normal]
 \Vertex{A}
 \EA(A){B}
-\Edges(A,B)
+\Edges[color=blue](A,B)
 \end{tikzpicture}
 \end{center}
 \end{minipage} 
@@ -323,7 +323,7 @@ Au final, le diamètre $D$ d'une grille est : $$D = q\times(N-1)$$
 
 \paragraph{Bissection :}
 
-La bissection, ou plus précisément la largeur de la bissection est le nombre minimum d'arête qu'il faut enlever à la grille pour la diviser en deux moitiés avec un nombre de nœuds identique.
+La bissection, ou plus précisément la largeur de la bissection est le nombre minimum d'arêtes qu'il faut enlever à la grille pour la diviser en deux moitiés avec un nombre de nœuds identique (à un près).
 
 On remarque déjà que ce problème dépend de la parité du nombre de nœuds de la grille : dans le cas où celui-ci est pair, il est possible de diviser la grille en deux avec un nombre de nœuds identiques; dans le cas où celui-ci est impaire, les deux grilles résultantes auront un nombre de nœuds égal à plus ou moins un nœud près.
 
@@ -339,6 +339,273 @@ On peut donc dire que la largeur de la bissection dans le cas où $N$ est de $N^
 
 \subparagraph{Cas où $N$ est impair :}
 
-On peut montrer que dans le cas où $N$ est impair, la largeur de la bissection est :
+%On peut montrer que dans le cas où $N$ est impair, la largeur de la bissection est :
 
-$$\sum_{i=0}^{d-1} N^i = \frac{N^d-1}{N-1}$$
+%$$\sum_{i=0}^{d-1} N^i = \frac{N^d-1}{N-1}$$
+
+On rappelle que la bissection est le nombre minimum d'arêtes qu'il faut enlever à la grille pour la diviser en deux moitiés avec un nombre de nœuds identique (a un près). Dans le cas où $N=3$, on peut, en prenant en compte cette définition, effectuer la division de la façon suivante :
+
+\begin{center}
+
+\begin{tabular}{cccc}
+
+$d = 1$ &
+
+\begin{minipage}[c]{0.2\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\SetGraphUnit{1}
+\GraphInit[vstyle=Normal]
+\Vertex{A}
+\EA(A){B} \EA(B){C}
+\Edges(A,B)
+\SetUpEdge[color=red, lw=2pt]
+\Edge(B)(C)
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+
+&
+$\longrightarrow$
+& 
+\begin{minipage}[c]{0.2\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\SetGraphUnit{1}
+\GraphInit[vstyle=Normal]
+\Vertex{A}
+\EA(A){B} \EA(B){C}
+\Edges(A,B)
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+\\ & & & \\
+
+$d = 2$ &
+
+\begin{minipage}[c]{0.2\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\SetGraphUnit{1.2}
+\GraphInit[vstyle=Normal]
+\Vertex{AA}
+\EA(AA){BA} \EA(BA){CA}
+\SO(AA){AB}
+\EA(AB){BB} \EA(BB){CB}
+\SO(AB){AC}
+\EA(AC){BC} \EA(BC){CC}
+
+
+\Edges(AA,BA,CA)
+\Edges(AB,BB)
+\Edges(AC,BC,CC)
+
+\Edges(AA,AB)
+\Edges(BA,BB)
+\Edges(CB,CC)
+
+\SetUpEdge[color=green, lw=2pt]
+\Edge(AB)(AC)
+\Edge(BB)(BC)
+\Edge(CA)(CB)
+\SetUpEdge[color=red, lw=2pt]
+\Edge(BB)(CB)
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+
+& $\longrightarrow$ &
+
+\begin{minipage}[c]{0.2\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\SetGraphUnit{1.2}
+\GraphInit[vstyle=Normal]
+\Vertex{AA}
+\EA(AA){BA} \EA(BA){CA}
+\SO(AA){AB}
+\EA(AB){BB} \EA(BB){CB}
+\SO(AB){AC}
+\EA(AC){BC} \EA(BC){CC}
+
+
+\Edges(AA,BA,CA)
+\Edges(AB,BB)
+\Edges(AC,BC,CC)
+
+\Edges(AA,AB)
+\Edges(BA,BB)
+\Edges(CB,CC)
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+\\ & & & \\
+
+$d = 3$ &
+
+\begin{minipage}[c]{0.2\linewidth}
+\begin{center}
+\resizebox{3.5cm}{3.5cm}{
+\begin{tikzpicture}
+\GraphInit[vstyle=Normal]
+\SetGraphUnit{2.5}
+%\draw[help lines] (0,-3) grid (2,2);
+
+\Vertex[x=2 , y=-3]{ACC}
+\EA(ACC){BCC} \EA(BCC){CCC}
+\Edges(ACC,BCC,CCC)
+
+\Vertex[x=1 , y=-4]{ACB}
+\EA(ACB){BCB} \EA(BCB){CCB}
+\Edges(ACB,BCB,CCB)
+
+\Vertex[x=2 , y=-0.5]{ABC}
+\EA(ABC){BBC} \EA(BBC){CBC}
+\Edges(BBC,CBC)
+
+\Vertex[x=1 , y=-1.5]{ABB}
+\EA(ABB){BBB} \EA(BBB){CBB}
+\Edges(ABB,BBB)
+
+\Vertex[x=2 , y=2]{AAC}
+\EA(AAC){BAC} \EA(BAC){CAC}
+\Edges(AAC,BAC,CAC)
+\Edges(AAC,ABC)
+
+\Vertex[x=1 , y=1]{AAB}
+\EA(AAB){BAB} \EA(BAB){CAB}
+\Edges(AAB,BAB,CAB)
+
+\SetUpEdge[color=green, lw=2pt]
+\Edge(BAC)(BBC)
+\Edge(CAC)(CBC)
+\Edge(ABC)(ACC)
+\Edge(ABC)(BBC)
+\Edge(ACB)(ABB)
+\Edge(BBB)(BCB)
+\Edge(CAB)(CBB)
+\Edge(BBB)(CBB)
+\Edge(ABA)(ACA)
+\Edge(BBA)(BCA)
+\Edge(CAA)(CBA)
+\Edge(BBA)(CBA)
+\SetUpEdge[color=red, lw=2pt]
+\Edge(BBB)(BBC)
+\SetUpEdge[color=black]
+
+\Vertex{AAA}
+\EA(AAA){BAA} \EA(BAA){CAA}
+\Edges(AAA,BAA,CAA)
+
+\SO(AAA){ABA} \EA(ABA){BBA} \EA(BBA){CBA}
+
+\SO(ABA){ACA} \EA(ACA){BCA} \EA(BCA){CCA}
+\Edges(ABA,ABB,ABC)
+\Edges(BBA,BBB)
+\Edges(CBA,CBB,CBC)
+\Edges(AAA,AAB,AAC)
+\Edges(BAA,BAB,BAC)
+\Edges(CAA,CAB,CAC)
+\Edges(ABA,BBA)
+\Edges(ACA,BCA,CCA)
+\Edges(AAA, ABA)
+\Edges(ACA,ACB,ACC)
+\Edges(BAA,BBA)
+\Edges(BCA,BCB,BCC,BBC)
+\Edges(CBA, CCA,CCB,CCC, CBC)
+\Edges(CBB,CCB)
+\Edges(BAB,BBB)
+\Edges(AAB,ABB)
+\end{tikzpicture}
+}
+\end{center}
+\end{minipage}
+
+& $\longrightarrow$ &
+
+\begin{minipage}[c]{0.2\linewidth}
+\begin{center}
+\resizebox{3.5cm}{3.5cm}{
+\begin{tikzpicture}
+\GraphInit[vstyle=Normal]
+\SetGraphUnit{2.5}
+%\draw[help lines] (0,-3) grid (2,2);
+
+\Vertex[x=2 , y=-3]{ACC}
+\EA(ACC){BCC} \EA(BCC){CCC}
+\Edges(ACC,BCC,CCC)
+
+\Vertex[x=1 , y=-4]{ACB}
+\EA(ACB){BCB} \EA(BCB){CCB}
+\Edges(ACB,BCB,CCB)
+
+\Vertex[x=2 , y=-0.5]{ABC}
+\EA(ABC){BBC} \EA(BBC){CBC}
+\Edges(BBC,CBC)
+
+\Vertex[x=1 , y=-1.5]{ABB}
+\EA(ABB){BBB} \EA(BBB){CBB}
+\Edges(ABB,BBB)
+
+\Vertex[x=2 , y=2]{AAC}
+\EA(AAC){BAC} \EA(BAC){CAC}
+\Edges(AAC,BAC,CAC)
+\Edges(AAC,ABC)
+
+\Vertex[x=1 , y=1]{AAB}
+\EA(AAB){BAB} \EA(BAB){CAB}
+\Edges(AAB,BAB,CAB)
+
+\Vertex{AAA}
+\EA(AAA){BAA} \EA(BAA){CAA}
+\Edges(AAA,BAA,CAA)
+
+\SO(AAA){ABA} \EA(ABA){BBA} \EA(BBA){CBA}
+
+\SO(ABA){ACA} \EA(ACA){BCA} \EA(BCA){CCA}
+\Edges(ABA,ABB,ABC)
+\Edges(BBA,BBB)
+\Edges(CBA,CBB,CBC)
+\Edges(AAA,AAB,AAC)
+\Edges(BAA,BAB,BAC)
+\Edges(CAA,CAB,CAC)
+\Edges(ABA,BBA)
+\Edges(ACA,BCA,CCA)
+\Edges(AAA, ABA)
+\Edges(ACA,ACB,ACC)
+\Edges(BAA,BBA)
+\Edges(BCA,BCB,BCC,BBC)
+\Edges(CBA, CCA,CCB,CCC, CBC)
+\Edges(CBB,CCB)
+\Edges(BAB,BBB)
+\Edges(AAB,ABB)
+\end{tikzpicture}
+}
+\end{center}
+\end{minipage}
+
+\end{tabular}
+
+\end{center}
+
+On remarque à travers cet exemple que la division en deux grilles se fait en deux étapes :
+\begin{itemize}
+\item pour une dimensions $d$, on effectue une bissection dans chaque dimension $d-1$ (arêtes vertes);
+\item on supprime l'arrête restante et joignant les deux blocs (arête rouge).
+\end{itemize}
+
+En effet, si l'on prend le cas ci-dessus où $d=2$, on a vu précédemment que la grille était composée de $3$ chaines de dimension $d-1 = 1$. On effectue dans ces chaines les bissections que l'on avait trouvés en dimension $1$ ce qui nous amène à supprimer les arêtes en vert. Ne reste alors qu'une arrête joignant les deux blocs (arête rouge $(BB)-(CB)$) qu'il faut supprimer pour obtenir une bissection conforme à la définition.
+
+De même, en prenant le cas où $d=3$, la grille est composée de trois grilles de dimension $d-1=2$. On effectue dans chacune de ces grilles les bissections que nous venons de voir en dimension $2$ ce qui nous amène à supprimer les arêtes en vert. Ne reste alors qu'une arrête joignant les deux blocs (arête rouge $(BBB)-(BBC)$) qu'il faut supprimer pour obtenir une bissection conforme à la définition.
+
+Si l'on écrit ce procédé mathématiquement, on obtient, en notant $B_d$ la bissection de la grille en dimensions $d$, la relation de récurrence suivante :
+
+$$B_d = N \times B_{d-1} + 1$$
+
+En effet, de façon générale, le nombre d'arêtes à enlever pour obtenir une bissection en dimension $d$ est égale à $N$ fois le nombre d'arêtes à enlever en dimension $d-1$ plus une arête pour séparer les deux blocs.
+
+On obtient alors une suite arithmético-géométrique que l'on peut facilement résoudre. On obtient alors dans le cas général :
+
+$$B_d = N^d(B_0-\frac{1}{1-N}) + \frac{1}{1-N} = \frac{1-N^d}{1-N} \text{ avec la convention }B_0 = 0$$
+
+\paragraph{Remarque importante :} Il est à noter que la valeur $\frac{1-N^d}{1-N}$ est obtenue suite à l'application d'une méthode empirique qui ne prouve en rien qu'il s'agisse de la bissection optimale. Cela avait été clairement noté par \cite{Leighton1992} dans sa liste de problèmes restés ouverts. Il ne s'agit en effet que d'une borne inférieure de la valeur de la bissection. Le problème est resté ouvert pendant plusieurs années avant que \cite{KE2007} ne prouve qu'il s'agisse également d'une borne supérieure, montrant par la même occasion que $B_d = \frac{1-N^d}{1-N}$ est la valeur optimale d'une bissection pour une grille.
