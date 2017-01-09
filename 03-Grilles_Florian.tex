@@ -1,6 +1,8 @@
 \section{Les grilles}
 
-\begin{dfn}[Grille]
+\subsection{Défintion}
+
+\begin{dfn}
 Une grille de dimension $d$ possédant $N$ nœuds suivant chaque coordonnée est le produit cartésien de $d$ chaines ($d>1$) de $N$ sommets. On note cette grille $M(N)^d$ que l'on dira \textit{de coté N}.
 \end{dfn}
 
@@ -79,7 +81,11 @@ A pour résultat la grille $M(4)^2$  :
 
 \end{ex}
 
-\paragraph{Nombre total de nœuds :}
+\subsection{Propriétés}
+
+\subsubsection{Nombre total de nœuds}
+
+
 
 Il résulte de la définition ci-dessus que le nombre total de nœuds est égal au cardinal du produit cartésien de l'ensemble des nœuds de départ :
 
@@ -87,7 +93,8 @@ $$Card(S)= Card(\underbrace{E \times E \times ... \times E}_{\text{p fois}}) = \
 
 $$\text{où } S \text{ est l'ensemble des noeuds de la grille}$$
 
-\paragraph{Nombre total d'arêtes :}
+\pagebreak
+\subsubsection{Nombre total d'arêtes}
 
 Soit $A$ l'ensemble des arêtes de la grille. Voici pour $N=2$ et $N=4$ le passage de la dimension $1$ aux dimensions supérieures ($2$ et $3$).
 
@@ -312,8 +319,7 @@ D'après l'ensemble des éléments qui précèdent, le nombre d'arêtes d'une gr
 $$\forall d \in \mathbb{N^*} \text{, }Card(A)_d = d\times (N-1)\times N^{d-1} $$ 
 
 
-
-\paragraph{Diamètre de la grille :}
+\subsubsection{Diamètre de la grille}
 
 La construction de la grille telle qu'envisagée jusque là nous permet de faire l'observation suivante : un nœud de la grille diffère exactement d'une seule coordonnée de ses voisins. Pour reprendre l'exemple déjà vu ci-dessus avec $N=2$ et $d=2$, le nœud $AA$ et voisin des nœuds $AB$ et $BA$. Dans un cas plus général où les nœuds de la grille seraient formés de coordonnées entières, le nœud de coordonnées $(x_0,x_1, ..., x_{d-1})$ aurait pour voisin dans la dimension $i$ le noeud de coordonnées $(y_0,y_1,...,y_i,...,y_{d-1})$ avec $y_i=x_i\pm1$.
 
@@ -321,13 +327,12 @@ Or par définition, le diamètre d'un graphe est la plus grande distance entre d
 
 Au final, le diamètre $D$ d'une grille est : $$D = q\times(N-1)$$
 
-\paragraph{Bissection :}
-
+\subsubsection{Bissection de la grille}
 La bissection, ou plus précisément la largeur de la bissection est le nombre minimum d'arêtes qu'il faut enlever à la grille pour la diviser en deux moitiés avec un nombre de nœuds identique (à un près).
 
 On remarque déjà que ce problème dépend de la parité du nombre de nœuds de la grille : dans le cas où celui-ci est pair, il est possible de diviser la grille en deux avec un nombre de nœuds identiques; dans le cas où celui-ci est impaire, les deux grilles résultantes auront un nombre de nœuds égal à plus ou moins un nœud près.
 
-\subparagraph{Cas où $N$ est pair :}
+\paragraph{Cas où $N$ est pair :}
 
 La séparation en deux grilles avec un nombre de nœuds identique est triviale. La question est cependant de connaitre le nombre exacte d'arêtes à enlever pour obtenir cette séparation.
 
@@ -337,7 +342,7 @@ Ainsi, lorsque l'on sépare une grille en deux, on la sépare à une jonction en
 
 On peut donc dire que la largeur de la bissection dans le cas où $N$ est de $N^{d-1}$.
 
-\subparagraph{Cas où $N$ est impair :}
+\paragraph{Cas où $N$ est impair :}
 
 %On peut montrer que dans le cas où $N$ est impair, la largeur de la bissection est :
 
@@ -609,3 +614,7 @@ On obtient alors une suite arithmético-géométrique que l'on peut facilement r
 $$B_d = N^d(B_0-\frac{1}{1-N}) + \frac{1}{1-N} = \frac{1-N^d}{1-N} \text{ avec la convention }B_0 = 0$$
 
 \paragraph{Remarque importante :} Il est à noter que la valeur $\frac{1-N^d}{1-N}$ est obtenue suite à l'application d'une méthode empirique qui ne prouve en rien qu'il s'agisse de la bissection optimale. Cela avait été clairement noté par \cite{Leighton1992} dans sa liste de problèmes restés ouverts. Il ne s'agit en effet que d'une borne inférieure de la valeur de la bissection. Le problème est resté ouvert pendant plusieurs années avant que \cite{KE2007} ne prouve qu'il s'agisse également d'une borne supérieure, montrant par la même occasion que $B_d = \frac{1-N^d}{1-N}$ est la valeur optimale d'une bissection pour une grille.
+
+\subsubsection{Exemple d'algorithme sur une grille}
+
+Dans \cite{Leighton1992}, un exemple de produit matriciel sur une grille à deux dimensions est donné au chapitre 3. Cet algorithme est plus connu sous le nom d'algorithme de Cannon. Il s'implémente sur une grille de coté $N$ et de dimension $2$. 
