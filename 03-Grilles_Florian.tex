@@ -289,7 +289,7 @@ Cette méthode de construction nous donne une relation de récurrence pour le no
 
 $$Card(A)_{d+1} = \underbrace{N \times Card(A)_d}_{\text{On copie }N\text{ fois la grille de dimension }d} + \underbrace{(N-1)\times Card(S)_d}_{\text{On relie les arêtes de chaque grille}}$$
 
-On ne peut aisément déterminer une expression générale de la suite ci-dessus. Or, les exemples précédents nous permettent de déduire une expression du nombre d'arêtes en fonction de $d$ et de $N$ : 
+On ne peut aisément déterminer une expression générale de la suite ci-dessus. Or les exemples précédents nous permettent de déduire une expression du nombre d'arêtes en fonction de $d$ et de $N$ : 
 
 $$Card(A)_d = d\times (N-1)\times N^{d-1}$$
 
@@ -321,26 +321,26 @@ $$\forall d \in \mathbb{N^*} \text{, }Card(A)_d = d\times (N-1)\times N^{d-1} $$
 
 \subsubsection{Diamètre de la grille}
 
-La construction de la grille telle qu'envisagée jusque là nous permet de faire l'observation suivante : un nœud de la grille diffère exactement d'une seule coordonnée de ses voisins. Pour reprendre l'exemple déjà vu ci-dessus avec $N=2$ et $d=2$, le nœud $AA$ et voisin des nœuds $AB$ et $BA$. Dans un cas plus général où les nœuds de la grille seraient formés de coordonnées entières, le nœud de coordonnées $(x_0,x_1, ..., x_{d-1})$ aurait pour voisin dans la dimension $i$ le noeud de coordonnées $(y_0,y_1,...,y_i,...,y_{d-1})$ avec $y_i=x_i\pm1$.
+La construction de la grille telle qu'envisagée jusque là nous permet de faire l'observation suivante : un nœud de la grille diffère exactement d'une seule coordonnée de ses voisins. Pour reprendre l'exemple déjà vu ci-dessus avec $N=2$ et $d=2$, le nœud $AA$ et voisin des nœuds $AB$ et $BA$. Dans un cas plus général où les nœuds de la grille seraient formés de coordonnées entières, le nœud de coordonnées $(x_0,x_1, ..., x_{d-1})$ aurait pour voisin dans la dimension $i$ le noeud de coordonnées $(x_0,x_1,...,y_i,...,x_{d-1})$ avec $y_i=x_i\pm1$.
 
 Or par définition, le diamètre d'un graphe est la plus grande distance entre deux sommets. Dans le cas général d'une grille composée de coordonnées entières, les deux nœuds les plus éloignés sont le nœud $\underbrace{(0,0,...,0)}_{q \text{ fois}}$ et le nœud $\underbrace{(N,N,...,N)}_{q \text{ fois}}$. Le plus long chemin entre ces deux nœuds est donc de passer par l'ensemble des coordonnées possibles, ce qui correspond à $q$ fois $N-1$ possibilités.
 
 Au final, le diamètre $D$ d'une grille est : $$D = q\times(N-1)$$
 
 \subsubsection{Bissection de la grille}
-La bissection, ou plus précisément la largeur de la bissection est le nombre minimum d'arêtes qu'il faut enlever à la grille pour la diviser en deux moitiés avec un nombre de nœuds identique (à un près).
+La bissection, ou plus précisément la largeur de la bissection, est le nombre minimum d'arêtes qu'il faut enlever à la grille pour la diviser en deux moitiés avec un nombre de nœuds identique (à un près).
 
-On remarque déjà que ce problème dépend de la parité du nombre de nœuds de la grille : dans le cas où celui-ci est pair, il est possible de diviser la grille en deux avec un nombre de nœuds identiques; dans le cas où celui-ci est impaire, les deux grilles résultantes auront un nombre de nœuds égal à plus ou moins un nœud près.
+On remarque déjà que ce problème dépend de la parité du nombre de nœuds de la grille : dans le cas où celui-ci est pair, il est possible de diviser la grille en deux avec un nombre de nœuds identique; dans le cas où celui-ci est impaire, les deux grilles résultantes auront un nombre de nœuds égal, à plus ou moins un nœud près.
 
 \paragraph{Cas où $N$ est pair :}
 
 La séparation en deux grilles avec un nombre de nœuds identique est triviale. La question est cependant de connaitre le nombre exacte d'arêtes à enlever pour obtenir cette séparation.
 
-Or on a vu précédemment que passer de la dimension $d-1$ à la dimension $d$ se faisait en deux étapes : recopie $N$ fois de la grille de dimension $d-1$ et création des nouvelles arêtes entre chaque nœuds correspondants des grille, c'est à dire $N^{d-1}$.
+Or on a vu précédemment que passer de la dimension $d-1$ à la dimension $d$ se faisait en deux étapes : recopie $N$ fois de la grille de dimension $d-1$ et création des nouvelles arêtes entre chaque nœuds correspondants des grilles, c'est à dire $N^{d-1}$ arêtes.
 
-Ainsi, lorsque l'on sépare une grille en deux, on la sépare à une jonction entre deux grille de dimension $d-1$ ce qui nous conduit à enlever exactement $N^{d-1}$.
+Ainsi, lorsque l'on sépare une grille en deux, on la sépare à une jonction entre deux grilles de dimension $d-1$ ce qui nous conduit à enlever exactement $N^{d-1}$ arêtes.
 
-On peut donc dire que la largeur de la bissection dans le cas où $N$ est de $N^{d-1}$.
+On peut donc dire que la largeur de la bissection d'une grille de coté $N$ ($N$ étant pair) est $N^{d-1}$.
 
 \paragraph{Cas où $N$ est impair :}
 
@@ -595,11 +595,11 @@ $d = 3$ &
 
 On remarque à travers cet exemple que la division en deux grilles se fait en deux étapes :
 \begin{itemize}
-\item pour une dimensions $d$, on effectue une bissection dans chaque dimension $d-1$ (arêtes vertes);
-\item on supprime l'arrête restante et joignant les deux blocs (arête rouge).
+\item pour une grille de dimensions $d$, on effectue une bissection dans chaque dimension $d-1$ (arêtes vertes);
+\item on obtient deux blocs reliés par une unique arête (arête rouge) que l'on retire afin d'obtenir deux blocs distincts avec le même nombre de nœuds (à un près).
 \end{itemize}
 
-En effet, si l'on prend le cas ci-dessus où $d=2$, on a vu précédemment que la grille était composée de $3$ chaines de dimension $d-1 = 1$. On effectue dans ces chaines les bissections que l'on avait trouvés en dimension $1$ ce qui nous amène à supprimer les arêtes en vert. Ne reste alors qu'une arrête joignant les deux blocs (arête rouge $(BB)-(CB)$) qu'il faut supprimer pour obtenir une bissection conforme à la définition.
+En effet, si l'on prend le cas ci-dessus où $d=2$, on a vu précédemment que la grille était composée de $3$ chaines de dimension $d-1 = 1$. On effectue dans ces chaines les bissections que l'on avait trouvées en dimension $1$ ce qui nous amène à supprimer les arêtes en vert. Ne reste alors qu'une arrête joignant les deux blocs (arête rouge $(BB)-(CB)$) qu'il faut supprimer pour obtenir une bissection conforme à la définition.
 
 De même, en prenant le cas où $d=3$, la grille est composée de trois grilles de dimension $d-1=2$. On effectue dans chacune de ces grilles les bissections que nous venons de voir en dimension $2$ ce qui nous amène à supprimer les arêtes en vert. Ne reste alors qu'une arrête joignant les deux blocs (arête rouge $(BBB)-(BBC)$) qu'il faut supprimer pour obtenir une bissection conforme à la définition.
 
@@ -613,8 +613,21 @@ On obtient alors une suite arithmético-géométrique que l'on peut facilement r
 
 $$B_d = N^d(B_0-\frac{1}{1-N}) + \frac{1}{1-N} = \frac{1-N^d}{1-N} \text{ avec la convention }B_0 = 0$$
 
-\paragraph{Remarque importante :} Il est à noter que la valeur $\frac{1-N^d}{1-N}$ est obtenue suite à l'application d'une méthode empirique qui ne prouve en rien qu'il s'agisse de la bissection optimale. Cela avait été clairement noté par \cite{Leighton1992} dans sa liste de problèmes restés ouverts. Il ne s'agit en effet que d'une borne inférieure de la valeur de la bissection. Le problème est resté ouvert pendant plusieurs années avant que \cite{KE2007} ne prouve qu'il s'agisse également d'une borne supérieure, montrant par la même occasion que $B_d = \frac{1-N^d}{1-N}$ est la valeur optimale d'une bissection pour une grille.
+\paragraph{Remarque importante :} Il est à noter que la valeur $\frac{1-N^d}{1-N}$ est obtenue suite à l'application d'une méthode empirique qui ne prouve en rien qu'il s'agisse de la bissection optimale. Cela avait été clairement noté par \cite{Leighton1992} dans sa liste de problèmes restés ouverts. Il ne s'agit en effet que d'une borne inférieure de la valeur de la bissection. Le problème est resté ouvert pendant plusieurs années avant que \cite{KE2007} ne prouve qu'il s'agisse également d'une borne supérieure, montrant par la même occasion que $B_d = \frac{1-N^d}{1-N}$ est la valeur optimale d'une bissection pour une grille de coté $N$ ($N$ étant impair).
 
 \subsubsection{Exemple d'algorithme sur une grille}
 
-Dans \cite{Leighton1992}, un exemple de produit matriciel sur une grille à deux dimensions est donné au chapitre 3. Cet algorithme est plus connu sous le nom d'algorithme de Cannon. Il s'implémente sur une grille de coté $N$ et de dimension $2$. 
+Dans \cite{Leighton1992}, des exemples d'algorithmes s'implémentant sur des grilles ou des grilles toriques sont donnés au chapitre 3. L'un des exemples les plus répandus est l'implémentation parallèle d'un produit matriciel pour des matrices d'ordre $N$. L'ouvrage propose un principe d'implémentation pour effectuer ce produit en $N$ étapes de calcul : on crée une grille de dimension $2$ et de coté $N$ sur laquelle on répartit les calculs des coefficients $c_{i,j} = \sum\limits_{k=1}^n a_{i,k} \times b_{k,j}$. Ainsi, le nœud $(i,j)$ de la grille en dimension $2$ est en charge du calcul du coefficient $c_{i,j}$.
+
+Différents algorithmes proposent de mettre en œuvre cette méthode. C'est notamment le cas de l'algorithme de Fox que nous allons détailler ci-dessous.
+
+\paragraph{Initialisation de l'algorithme de Fox (étape $0$) :} On considère pour simplifier la présentation de cet algorithme que nous sommes en présence de deux matrices $A$ et $B$ d'ordre $N$ ainsi que de $N^2$ nœuds de calculs. Chaque nœud se voit attribuer la mémoire nécessaire pour stocker un élément de $A$, un élément de $B$ et un élément de $C$ ($C = AB$). 
+
+\paragraph{Étape 1 de l'algorithme de Fox :} La première étape du calcul consiste à calculer dans chaque nœud $(i,j)$ le coefficient $c_{i,j} = a_{i,i}\times b_{i,j}$. Il est donc nécessaire de diffuser les coefficients diagonaux $a_{i,i}$ de la matrice $A$ à travers les lignes de la grille ainsi que les coefficient $b_{i,j}$ de la matrice $B$ à chaque nœud $(i,j)$ de la grille.
+
+\paragraph{Étape $k$ de l'algorithme de Fox :} Quelle que soit l'étape $k$ qui suit, le calcul dans chaque nœud $(i,j)$ de la grille consiste à calculer le coefficient $c_{i,j} = c_{i,j} + a_{i,i+k}\times b_{i+k,j}$. Cela se fait en diffusant sur chaque ligne de la grille l'élément de la colonne suivante (modulo $N$) de $A$ et en translatant sur la grille (toujours modulo $N$), du bas vers le haut, les éléments de la matrice $B$.
+
+\paragraph{} Après $N$ étapes, chaque nœud $(i,j)$ de la grille détient le coefficient $c_{i,j}$ de la matrice $C = AB$.\\
+
+
+Cet algorithme parallèle a donc une complexité en $\mathcal{O}(N)$ ce qui est bien meilleur que les algorithmes séquentiels de produit matriciel. En effet, une implémentation naïve d'un produit matriciel séquentiel (deux boucles "for" imbriquées) est en $\mathcal{O}(N^3)$ et des versions plus optimisées n'améliorent que très peu cette complexité. Par exemple, on apprend dans \cite{wiki:Strassen} que l'algorithme de Strassen a une complexité en $\mathcal{O}(N^{2,807})$ et dans \cite{wiki:Coppersmith-Winograd} que celui de Coppersmith-Winograd a une complexité en $\mathcal{O}(N^{2,376})$, ce qui en fait l'algorithme séquentiel de produit matriciel le plus efficace asymptotiquement.
