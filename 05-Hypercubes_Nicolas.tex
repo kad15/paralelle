@@ -4,7 +4,7 @@ Un hypercube est une grille de dimension $d$ ne possédant que deux sommets selo
 \\
 \begin{figure}[!h]
 \begin{center}
-\hspace*{-1.2in}
+\hspace*{-1.4in}
 \begin{tabular}{ccccccccc}
 ~~	$d = 0$ & & ~~ $d = 1$ & & ~~~$d = 2$ & & $d = 3$ & & ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~$d = 4$ \\ 
 \begin{minipage}[c]{0.02\linewidth}
@@ -163,7 +163,7 @@ Ces propriétés permettent d'implémenter un algorithme de routage très simple
 
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.25]{images/q9.pdf}
+\includegraphics[scale=0.20]{images/q9.pdf}
 \caption{Une projection de l'\textit{enneract} (9-cube)}
 \end{figure}
 
@@ -215,7 +215,8 @@ Cette procédure est exécutée par chacune des $n$ tâches. La tâche $task\_id
 
 Dans ce paragraphe, nous décrivons l'algorithme de tri par fusion bitonique, particulièrement adapté aux réseaux de tri et au calcul parallèle. Pour simplifier les explications, on considère un tableau de taille multiple de $n$, notée $l = Mn = M2^d$ avec $M$ entier. On commence par distribuer le tableau sur les $n$ nœuds d'un hypercube de dimension $d$, chaque nœud ayant pour état initial un sous-tableau de taille $M$.
 
-Prenons par exemple le tableau de 24 éléments suivant : $[15, 10, 2, 11, 6, 4, 0, 3, 2, 13, 14, 7, 9, 9, 4, 13, 6, 5, 13, 0, 5, 2, 13, 1]$. On distribue ce tableau en 8 sous-tableaux de trois éléments, de manière arbitraire sur un hypercube de dimension 3 (figure \ref{fig:bitonic1}) puis chaque tâche trie ensuite, de manière séquentielle, son sous-tableau (figure \ref{fig:bitonic2}).
+Prenons par exemple le tableau de 24 éléments suivant :\\
+ $[15, 10, 2, 11, 6, 4, 0, 3, 2, 13, 14, 7, 9, 9, 4, 13, 6, 5, 13, 0, 5, 2, 13, 1]$.\\ On distribue ce tableau en 8 sous-tableaux de trois éléments, de manière arbitraire sur un hypercube de dimension 3 (figure \ref{fig:bitonic1}) puis chaque tâche trie ensuite, de manière séquentielle, son sous-tableau (figure \ref{fig:bitonic2}).
 
 \begin{figure}[!h]
 \begin{center}
@@ -290,9 +291,9 @@ Prenons par exemple le tableau de 24 éléments suivant : $[15, 10, 2, 11, 6, 4,
 Nous aurons besoin de faire communiquer les nœuds pour fusionner les sous-tableaux de manière à pouvoir obtenir la séquence triée attendue. L'idée est de maintenir des relations d'ordre sur les états des nœuds : pour des sous-tableaux $T_i$ et $T_j$ vivant respectivement sur les tâches $P_i$ et $P_j$, on écrira $T_i \leq T_j$ si chaque élément de $T_i$ est inférieur ou égal à chacun des éléments de $T_j$. On cherchera alors, pour deux nœuds voisins $P_i$ et $P_j$, à obtenir des sous-tableaux $T_i' \leq T_j'$ en combinant leurs sous-tableaux initiaux $T_i$ et $T_j$. L'algorithme permettant de réaliser cette opération porte le nom de \textit{compare-exchange} ou \textit{compare-split} et est notamment décrit dans \cite{GRAMA} :
 
 \begin{enumerate}
-\item Chaque tâche envoie à l'autre tâche son sous-tableau de $M$ éléments, si bien que les deux nœuds disposent d'une copie locale de $T_i$ et $T_j$.
-\item Par un critère bien défini, chacune des tâches sait si elle joue le rôle de $P_i$ (resp. $P_j$) et fusionnera les deux tableaux $T_i$ et $T_j$ de manière à sélectionner les $M$ plus petits (resp. plus grands) éléments de $T_i \cup T_j$ (\textit{compare-split-high} ou \textit{compare-exchange-low}).
-\item À l'issue, les deux tâches contiendront l'un des sous-tableaux $T_i'$ et $T_j'$ avec $T_i' \leq T_j'$ (et bien entendu $T_i' \cup T_j' = T_i \cup T_j$).
+\item Chaque nœud envoie à l'autre nœud son sous-tableau de $M$ éléments, si bien que les deux tâches disposent d'une copie locale de $T_i$ et $T_j$.
+\item Par un critère bien défini, chacun des nœuds sait s'il joue le rôle de $P_i$ (resp. $P_j$) et fusionnera les deux tableaux $T_i$ et $T_j$ de manière à sélectionner les $M$ plus petits (resp. plus grands) éléments de $T_i \cup T_j$ (on parlera de \textit{compare-split-low} ou \textit{compare-split-high}).
+\item À l'issue, les deux nœuds contiendront l'un des sous-tableaux $T_i'$ et $T_j'$ avec $T_i' \leq T_j'$ (et bien entendu $T_i' \cup T_j' = T_i \cup T_j$).
 \end{enumerate}
 
 \begin{figure}[!h]
@@ -319,10 +320,10 @@ Nous aurons besoin de faire communiquer les nœuds pour fusionner les sous-table
 
 \Vertex[x=0,y=0.9,L={[3,4,6]}]{1};
 \Vertex[x=4,y=0.9,L={[0,2,9]}]{2};
-\Edge[style={->,bend left=10},label=send/rcv](1)(2);
-\Edge[style={->,bend left=10},label=rcv/send](2)(1);
+\Edge[style={->,bend left=10},label=send/recv](1)(2);
+\Edge[style={->,bend left=10},label=recv/send](2)(1);
 \end{tikzpicture}
-\caption{Les deux tâches s'envoient leur tableau}
+\caption{Les deux nœuds s'envoient leur tableau}
 \label{fig:bitonic3}
 \end{center}
 \end{subfigure}%
@@ -356,7 +357,7 @@ Nous aurons besoin de faire communiquer les nœuds pour fusionner les sous-table
 \Edge[style={->,bend left=100}](2)(3);
 \Edge[style={->,bend left=100}](3)(2);
 \end{tikzpicture}
-\caption{Chaque tâche dispose d'une copie locale des deux tableaux, qu'elle fusionne}
+\caption{Chaque nœud dispose d'une copie locale des deux tableaux, qu'il fusionne}
 \label{fig:bitonic4}
 \end{center}
 \end{subfigure}%
@@ -392,8 +393,297 @@ Nous aurons besoin de faire communiquer les nœuds pour fusionner les sous-table
 \caption{\textit{Compare-split} entre deux tâches $P_i$ et $P_j$}
 \end{figure}
 
-Les sous-tableaux initiaux étant triés, l'opération de fusion ne présente pas de difficulté et sa complexité est en $\mathcal{O}(M)$. Pour cette même raison, il n'est pas toujours nécessaire de disposer des $M$ éléments de l'autre sous-tableau pour obtenir le nouveau sous-tableau et on pourrait imaginer que les tâches s'échangent à la volée les éléments nécessaires à la décision, à condition que les coûts engendrés par le surplus de messages ne soient pas supérieurs aux gains liés à la réduction du volume des échanges.
+Les sous-tableaux initiaux étant triés, l'opération de fusion ne présente pas de difficulté et sa complexité est en $\mathcal{O}(M)$. Pour cette même raison, il n'est pas toujours nécessaire de disposer des $M$ éléments de l'autre sous-tableau pour obtenir le nouveau sous-tableau et on pourrait imaginer que les tâches s'échangent plus ou moins à la volée les éléments nécessaires à la décision, à condition que les coûts engendrés par le surplus de messages ne soient pas supérieurs aux gains liés à la réduction du volume des échanges.
 
 \subsubsection{\textit{Parallel merge}}
 
+L'algorithme \textit{compare-split} permet de trier un tableau distribué sur deux nœuds. La problématique qui se pose maintenant est commune à tous les réseaux de tri et plus généralement au calcul parallèle. Il s'agit d'assembler les résultats, ici en trouvant le réseau de tri c'est-à-dire la séquence (nombre, ordre…) d'opérations \textit{compare-split} deux à deux permettant de trier le tableau correctement.
+
+On trouve ainsi dans \cite{GRAMA} cette séquence, exécutée par chacun des $n$ processus :
+
+\begin{algorithm}
+\caption{parallel-merge($task\_id$, $n$, $input$, $output$)}
+\begin{algorithmic}
+\REQUIRE $task\_id$, $n$, $input$, $output$
+\STATE $list \leftarrow input$
+\FOR{$i = 0$ \TO $\log_2 n - 1$}
+\FOR{$j = i \textbf{ downto } 0$}
+\STATE $partner \leftarrow task\_id \oplus 2^j$
+\IF{$(task\_id \text{ \& } 2^{i+1}) \oplus (task\_id \text{ \& } 2^j)$}
+\STATE $list \leftarrow \text{compare-split-high} (partner, list)$
+\ELSE
+\STATE $list \leftarrow \text{compare-split-low} (partner, list)$
+\ENDIF
+\ENDFOR
+\ENDFOR
+\STATE $output \leftarrow list$
+\end{algorithmic}
+\end{algorithm}
+
+Ci-dessous, on représente les séquences d'opérations nécessaires pour trier des éléments distribués sur un 2-cube puis sur un 3-cube, comme le ferait l'algorithme. Les flèches indiquent une opération \textit{compare-split}, le nœud à la base de la flèche opère un \textit{compare-split-high}, le nœud pointé un \textit{compare-split-low}. En quelques mots, chaque itération sur $i$ permet de fusionner deux tableaux triés sur deux hypercubes de dimension $i$ pour obtenir un tableau trié sur un seul hypercube de dimension $i+1$.
+
+\newpage
+\begin{figure}[!h]
+
+$i = 0$ \begin{tabular}{c}
+\\ \begin{tikzpicture}
+\SetGraphUnit{1.2}
+\GraphInit[vstyle=Normal]
+\SetUpVertex[FillColor=blue!20]
+\Vertex{00}
+\SO(00){01}
+\SetUpVertex[FillColor=red!20]
+\EA(00){10}
+\EA(01){11}
+\Edge(00)(10)
+\Edge(01)(11)
+\SetUpEdge[lw=1.4pt]
+\Edge[style=->](01)(00)
+\Edge[style=->](10)(11)
+\end{tikzpicture}
+\end{tabular}
+
+$i = 1$ \begin{tabular}{cc}
+&  \\ 
+\begin{minipage}[c]{0.15\linewidth}
+\begin{tikzpicture}
+\SetGraphUnit{1.2}
+\GraphInit[vstyle=Normal]
+\SetUpVertex[FillColor=blue!20]
+\Vertex{00}
+\SO(00){01}
+\SetUpVertex[FillColor=red!20]
+\EA(00){10}
+\EA(01){11}
+\Edge(01)(00)
+\Edge(10)(11)
+\SetUpEdge[lw=1.4pt]
+\Edge[style=->](10)(00)
+\Edge[style=->](11)(01)
+\end{tikzpicture}
+\end{minipage}
+&
+\begin{minipage}[c]{0.15\linewidth}
+\begin{tikzpicture}
+\SetGraphUnit{1.2}
+\GraphInit[vstyle=Normal]
+\SetUpVertex[FillColor=blue!20]
+\Vertex{00}
+\SO(00){01}
+\SetUpVertex[FillColor=red!20]
+\EA(00){10}
+\EA(01){11}
+\Edge(00)(10)
+\Edge(01)(11)
+\SetUpEdge[lw=1.4pt]
+\Edge[style=->](01)(00)
+\Edge[style=->](11)(10)
+\end{tikzpicture}
+\end{minipage}
+\end{tabular}
+\caption{Séquence du tri bitonique sur un 2-cube}
+\end{figure}
+
+
+\begin{figure}[H]
+$i = 0$ \begin{tabular}{c}
+\\ 
+\resizebox{2.5cm}{2.5cm}{\begin{tikzpicture}
+\SetGraphUnit{2}
+\GraphInit[vstyle=Normal]
+\SetUpVertex[FillColor=blue!20]
+\Vertex{000}
+\EA(000){010}
+\SO(000){001}
+\EA(001){011}
+\SetUpVertex[FillColor=red!20]
+\Vertex[x=1 , y=1]{100}
+\EA(100){110}
+\SO(100){101}
+\EA(101){111}
+\Edge(000)(010)
+\Edge(011)(001)
+\Edge(100)(110)
+\Edge(110)(111)
+\Edge(111)(101)
+\Edge(000)(100)
+\Edge(010)(110)
+\Edge(001)(101)
+\Edge(011)(111)
+\SetUpEdge[lw=2pt]
+\Edge[style=->](001)(000)
+\Edge[style=->](101)(100)
+\Edge[style=->](010)(011)
+\Edge[style=->](110)(111)
+\end{tikzpicture}}\end{tabular}
+
+$i = 1$ \begin{tabular}{cc}
+& \\ 
+\resizebox{2.5cm}{2.5cm}{\begin{tikzpicture}
+\SetGraphUnit{2}
+\GraphInit[vstyle=Normal]
+\SetUpVertex[FillColor=blue!20]
+\Vertex{000}
+\EA(000){010}
+\SO(000){001}
+\EA(001){011}
+\SetUpVertex[FillColor=red!20]
+\Vertex[x=1 , y=1]{100}
+\EA(100){110}
+\SO(100){101}
+\EA(101){111}
+
+\Edge(011)(001)
+
+\Edge(110)(111)
+\Edge(000)(100)
+\Edge(010)(110)
+\Edge(001)(101)
+\Edge(011)(111)
+\Edge(001)(000)
+\Edge(101)(100)
+\Edge(010)(011)
+\Edge(110)(111)
+\SetUpEdge[lw=2pt]
+\Edge[style=<-](000)(010)
+\Edge[style=->](011)(001)
+\Edge[style=<-](111)(101)
+\Edge[style=->](100)(110)
+\end{tikzpicture}}
+&
+\resizebox{2.5cm}{2.5cm}{\begin{tikzpicture}
+\SetGraphUnit{2}
+\GraphInit[vstyle=Normal]
+\SetUpVertex[FillColor=blue!20]
+\Vertex{000}
+\EA(000){010}
+\SO(000){001}
+\EA(001){011}
+\SetUpVertex[FillColor=red!20]
+\Vertex[x=1 , y=1]{100}
+\EA(100){110}
+\SO(100){101}
+\EA(101){111}
+\Edge(000)(010)
+\Edge(011)(001)
+\Edge(100)(110)
+\Edge(110)(111)
+\Edge(111)(101)
+\Edge(000)(100)
+\Edge(010)(110)
+\Edge(001)(101)
+\Edge(011)(111)
+\SetUpEdge[lw=2pt]
+\Edge[style=->](001)(000)
+\Edge[style=<-](101)(100)
+\Edge[style=<-](010)(011)
+\Edge[style=->](110)(111)
+\end{tikzpicture}}
+\end{tabular}
+
+$i = 2$ \begin{tabular}{ccc}
+& & \\ 
+\resizebox{2.5cm}{2.5cm}{\begin{tikzpicture}
+\SetGraphUnit{2}
+\GraphInit[vstyle=Normal]
+\SetUpVertex[FillColor=blue!20]
+\Vertex{000}
+\EA(000){010}
+\SO(000){001}
+\EA(001){011}
+\SetUpVertex[FillColor=red!20]
+\Vertex[x=1 , y=1]{100}
+\EA(100){110}
+\SO(100){101}
+\EA(101){111}
+
+\Edge(011)(001)
+\Edge(110)(111)
+
+\Edge(001)(000)
+\Edge(101)(100)
+\Edge(010)(011)
+\Edge(110)(111)
+\Edge(000)(010)
+\Edge(011)(001)
+\Edge(111)(101)
+\Edge(100)(110)
+\SetUpEdge[lw=2pt]
+\Edge[style=<-](000)(100)
+\Edge[style=<-](001)(101)
+\Edge[style=<-](010)(110)
+\Edge[style=<-](011)(111)
+\end{tikzpicture}}
+&
+\resizebox{2.5cm}{2.5cm}{\begin{tikzpicture}
+\SetGraphUnit{2}
+\GraphInit[vstyle=Normal]
+\SetUpVertex[FillColor=blue!20]
+\Vertex{000}
+\EA(000){010}
+\SO(000){001}
+\EA(001){011}
+\SetUpVertex[FillColor=red!20]
+\Vertex[x=1 , y=1]{100}
+\EA(100){110}
+\SO(100){101}
+\EA(101){111}
+
+\Edge(011)(001)
+
+\Edge(110)(111)
+\Edge(000)(100)
+\Edge(010)(110)
+\Edge(001)(101)
+\Edge(011)(111)
+\Edge(001)(000)
+\Edge(101)(100)
+\Edge(010)(011)
+\Edge(110)(111)
+\SetUpEdge[lw=2pt]
+\Edge[style=<-](000)(010)
+\Edge[style=->](011)(001)
+\Edge[style=->](111)(101)
+\Edge[style=<-](100)(110)
+\end{tikzpicture}}
+&
+\resizebox{2.5cm}{2.5cm}{\begin{tikzpicture}
+\SetGraphUnit{2}
+\GraphInit[vstyle=Normal]
+\SetUpVertex[FillColor=blue!20]
+\Vertex{000}
+\EA(000){010}
+\SO(000){001}
+\EA(001){011}
+\SetUpVertex[FillColor=red!20]
+\Vertex[x=1 , y=1]{100}
+\EA(100){110}
+\SO(100){101}
+\EA(101){111}
+\Edge(000)(010)
+\Edge(011)(001)
+\Edge(100)(110)
+\Edge(110)(111)
+\Edge(111)(101)
+\Edge(000)(100)
+\Edge(010)(110)
+\Edge(001)(101)
+\Edge(011)(111)
+\SetUpEdge[lw=2pt]
+\Edge[style=->](001)(000)
+\Edge[style=->](101)(100)
+\Edge[style=<-](010)(011)
+\Edge[style=<-](110)(111)
+\end{tikzpicture}}
+\end{tabular}
+\caption{Séquence du tri bitonique sur un 3-cube}
+\label{blabla}
+\end{figure}
+
+
+
+Ainsi, en appliquant la séquence de \textit{compare-split} représentée en figure \ref{blabla} sur notre 3-cube initial, on obtiendrait le tableau trié, en parcourant nos nœuds par étiquette croissante.\\
+
+La complexité de cet algorithme parallèle est en $\mathcal{O}(\log^2n)$ et sa correction se prouve à l'aide de propriétés sur les suites dites bitoniques. Les communications étant nombreuses, cette implémentation n'est pas forcément évolutive et son usage doit être limité aux très grands tableaux. 
 \subsection{Quelques autres exemples d'algorithmes}
+On peut utiliser une structure en hypercube pour résoudre bien d'autres problèmes qui se prêtent bien au parallélisme : multiplication de matrices, traitement d'images (rotation, produit de convolution, etc.). On peut alors définir un code de Gray permettant de définir la notion de « voisins » pour l'application que l'on souhaite en faire. On trouve aussi des hypercubes dans les problématiques de réseaux et de \textit{broadcast}. Enfin, par plongements, l'hypercube peut être soit simulé sur une architecture le permettant, soit simulant en servant de support à un algorithme basé sur une grille, un arbre…
