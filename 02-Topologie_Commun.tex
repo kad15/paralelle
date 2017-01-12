@@ -51,7 +51,7 @@ Sans entrer dans les détails d'implémentation que l'on trouve nombreuses sur l
 un algorithme glouton qui utilise l'hypothèse qu'une décision prise sur la base
 d'un critère d'optimalité locale conduira à un optimum global. Ainsi, à chaque itération, l'algorithme choisit, parmi les noeuds non traités, le noeud
 du réseau dont la distance au noeud de départ est la plus faible. Ainsi, dans l'image \ref{fig:graph_dij}, on voit que le plus court chemin pour aller de A à C
-est égal à 7. On détermine ensuite de proche en proche le chemin le plus court grâce à la mémorisation des noeuds précédents. Ici, C à pour ``previous vertex'' E, 
+est égal à 7. On détermine ensuite de proche en proche le chemin le plus court grâce à la mémorisation des noeuds précédents. Ici, C a pour ``previous vertex'' E, 
 E -> D et D -> A. Le plus court chemin pour aller de A à C est donc ADEC. On utilise la même technique pour déterminer tous les chemins optimaux 
 d'origine A. Mais on peut n'avoir besoin que du calcul du chemin entre 2 sommets. De plus, la myopie de l'algorithme limite forcément ses performances. D'où l'idée
 d'utiliser une heuristique visant à guider les choix locaux. Ce qui nous amène à l'algorithme A* présenté brièvement dans la suite.
