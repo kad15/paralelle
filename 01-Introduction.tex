@@ -1,4 +1,10 @@
 \section*{Introduction}
 \addcontentsline{toc}{section}{Introduction}
 
-bla
+Les premières architectures informatiques utilisaient des processeurs qui effectuaient les opérations arithmétiques les unes après les autres. Ces processeurs étaient ainsi qualifiés de séquentiels. L'amélioration de la puissance de calcul des ordinateurs passait alors par l'augmentation de la fréquence d'horloge des processeurs, c'est à dire le nombre d'opérations par seconde réalisées par le composant.
+
+Cependant, des limites physiques à l'augmentation de la fréquence d'horloge ont vite été atteintes : la températures des composants ne rendait par exemple plus possible l'utilisation de telles machines dans le cadre de l'informatique personnelle. C'est à ce moment que les architectures parallèles ont été largement implémentées dans les ordinateurs grâce à l'émergence des processeurs multi-coeurs.
+
+Ce type d'architecture n'était pas nouveau mais était, jusqu'alors, plutôt réservé à des calculateurs professionnels et bien spécifiques : Météo-France utilisait par exemple des supercalculateurs \textit{Cray} dans les années 1980-1990. La fréquence d'horloge n'étant plus vraiment améliorable, les constructeurs ont alors commencé à augmenter le nombre de cœurs et de processeurs pour aboutir à des architectures qualifiées de \textit{massivement parallèles}.
+
+Le nombre de nœuds de calcul augmentant alors de façon conséquente, la communication entre chacun de ces nœuds ne pouvait plus se faire de façon simple. L'organisation et les liens de tous les processeurs devaient être au mieux adaptés et des topologies toujours plus efficaces devaient être mises en œuvre. C'est pour résoudre ces difficultés qu'il a été fait appel aux résultats de la théorie des graphes. Nous allons voir en quoi ces derniers ont largement contribué à améliorer les performances des architectures parallèles. Nous nous intéresserons tout d'abord à des résultats généraux sur les graphes et notamment aux algorithmes bien connus, de Dijkstra et A* avant d'étudier certaines formes particulières de graphes : les grilles, les arbres, les grilles d'arbre et, enfin, les hypercubes.
