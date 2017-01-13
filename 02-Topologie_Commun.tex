@@ -1,7 +1,7 @@
 \section{Algorithmes de Dijkstra et A*}
 
 
-\paragraph{Algorithmes de Dijkstra : }Edgser Wybe Dijkstra (EWD), physicien néerlandais reconverti à l'informatique en 1955, a proposé en 1959 un algorithme de recherche de chemin minimum dans un graphe dont la complexité est en $\mathcal{O}(n)$. 
+\paragraph{Algorithme de Dijkstra : }Edgser Wybe Dijkstra, physicien néerlandais reconverti à l'informatique en 1955, a proposé en 1959 un algorithme de recherche de chemin minimum dans un graphe.
 
 \begin{figure}[htp]
   \centering
@@ -11,7 +11,7 @@
 \end{figure}
 
 On doit à Dijkstra, qui avait la réputation d'avoir mauvais caractère et qui était notoirement allergique au ``GOTO'',
-quelques citations\footnote{source : \url{https://fr.wikipedia.org/wiki/Edsger_Dijkstra}} telles que :
+quelques citations\footnote{Source : \url{https://fr.wikipedia.org/wiki/Edsger_Dijkstra}} telles que :
 
 
 \begin{quote}
@@ -31,7 +31,7 @@ il peut surgir de nulle part, et la plupart du temps, il n'existe pas. »}
 
 
 L'algorithme donne le plus court chemin de la source à \textit{tous les sommets} d'un graphe 
-connexe pondéré (orienté ou non) dont le poids lié aux arêtes est positif ou nul.
+connexe pondéré (orienté ou non) dont les poids sont positifs ou nuls.
 
 
 
@@ -49,8 +49,7 @@ connexe pondéré (orienté ou non) dont le poids lié aux arêtes est positif o
 Sans entrer dans les détails d'implémentation que l'on trouve nombreux sur la toile et dans la littérature, l'algorithme de Dijkstra est 
 un algorithme glouton qui utilise l'hypothèse qu'une décision prise sur la base
 d'un critère d'optimalité locale conduira à un optimum global. Ainsi, à chaque itération, l'algorithme choisit, parmi les nœuds non traités, le nœud
-du réseau dont la distance au nœud de départ est la plus faible. Ainsi, dans l'image \ref{fig:graph_dij}, on voit que le plus court chemin pour aller de A à C a un coût de 7. On détermine ensuite de proche en proche le chemin le plus court grâce à la mémorisation des nœuds précédents. Ici, C a pour ``previous vertex'' E, 
-E -> D et D -> A. Le plus court chemin pour aller de A à C est donc ADEC. On utilise la même technique pour déterminer tous les chemins optimaux 
+du réseau dont la distance au nœud de départ est la plus faible. Après l'ajout de ce nœud au sous-graphe, on met à jour les distances des sommets voisins du nœud ajouté dans l'optique d'améliorer les chemins optimaux trouvés jusqu'ici. Généralement, on tient à jour une matrice et on remonte celle-ci à la fin de l'algorithme pour déterminer le chemin optimal entre deux sommets. Par exemple, sur la figure \ref{fig:graph_dij}, on voit que le plus court chemin pour aller de A à C a un coût de 7. On détermine ensuite de proche en proche le chemin le plus court grâce à la mémorisation des nœuds précédents. Ici, on voit que pour atteindre C avec le meilleur coût, on est passé par E, puis pour atteindre E, par D et en fin A. Le plus court chemin pour aller de A à C est donc ADEC. On utilise la même méthode pour déterminer tous les chemins optimaux 
 d'origine A. Mais on peut n'avoir besoin que du calcul du chemin entre 2 sommets. De plus, la myopie de l'algorithme limite forcément ses performances. D'où l'idée
 d'utiliser une heuristique visant à guider les choix locaux. Ce qui nous amène à l'algorithme A* présenté brièvement dans la suite.
 
@@ -70,67 +69,20 @@ la somme de la distance déjà parcourue et de la distance estimée restant à p
 Cet algorithme a été proposé pour la première fois 
 par Peter E. Hart, Nils John Nilsson et Bertram Raphael
 en 1968. Il s'agit d'une extension de l'algorithme de Dijkstra et s'applique comme ce dernier
-à des graphes munis d'une distance positive. En outre, A* ne teste pas tous les chemins ; il ne fournit donc
-qu'un des meilleurs chemins. A* est cependant très performant dans le cas où le graphe comporte une faible densité de nœuds 
+à des graphes munis d'une distance positive. A* est très performant dans le cas où le graphe comporte une faible densité de nœuds 
 mais n'est pas ou peu efficace dans le cas de parcours de labyrinthes par exemple.
 
 
-Il faut donc choisir, en fonction du problème, une heuristique $h$, c'est-à-dire ici une fonction qui estime la distance 
+Il faut tout d'abord choisir, en fonction du problème, une heuristique $h$, c'est-à-dire ici une fonction qui estime la distance 
 restante entre chaque nœud et l'arrivée, estimation par défaut qui ne doit jamais surestimer cette distance. 
 La précision du résultat final dépendra de la précision de l'estimation.
 On peut citer les heuristiques suivantes : la distance euclidienne (norme 2) ou à ``vol d'oiseau'' déjà citée 
 et la distance de Manhattan (norme 1) qui, sur une grille, correspond à la somme des cases verticales et horizontales
-qui sépare la position courante de l'arrivée. Les deux distances sont utilisables dans A* car elles sous-estiment
-la distance à l'arrivée.
+qui sépare la position courante de l'arrivée. Dans l'exemple du plan, les deux distances sont bien utilisables dans A* car elles sont des fonctions minorantes de la distance à l'arrivée.
 
-À chaque étape, l'algorithme calcule $g$, la distance déjà parcourue pour chaque nœud $n$ non visité puis
-la valeur $f(n) = g(n) + h(n)$. Le nœud sélectionné est celui pour lequel $f$ est minimale. Lorsque l'heuristique est la fonction nulle, A* est équivalent à l'algorithme de Dijkstra.
+À chaque étape l'algorithme calcule, pour chaque voisin non visité $n$ du point courant, la valeur $f(n) = g(n) + h(n)$ où $g(n)$ correspond au coût réel et minimal menant à $n$ et $h(n)$ la distance minorée qui relie $n$ à l'arrivée. L'exploration tient ainsi à jour une file, où les nœuds minimisant $f$ sont explorés en priorité. Lorsque l'heuristique est la fonction nulle, A* est équivalent à l'algorithme de Dijkstra.
 
 
+\paragraph{Utilisation} L'application évidente de ces algorithmes dans le cadre du calcul parallèle est le transfert optimal de données d'un nœud \textit{A} vers un nœud \textit{B}. Cette application est d'ailleurs largement inspirée du domaine des réseaux de communication qui utilisent aussi la modélisation par graphes. On retrouve ainsi l'algorithme de Dijkstra dans le protocole de routage dynamique \textit{OSPF} qui est au cœur de l'interconnexion de réseaux et où les poids peuvent par exemple correspondre à la bande-passante des liens. Aujourd'hui, le \textit{cloud computing} qui vise à exploiter la puissance de calcul de machines distantes par l'intermédiaire d'un réseau, généralement Internet, fait donc un usage intensif de ces protocoles de routage. Quant à l'algorithme A*, si l'on souhaite exploiter tout son potentiel, il convient de définir une heuristique qui sera alors fonction de la topologie considérée.
 
-\paragraph{Utilisation} L'application évidente de ces algorithmes dans le cadre du calcul parallèle est le transfert optimal de données d'un nœud \textit{A} vers un nœud \textit{B}. Cette application est d'ailleurs largement inspirée du domaine des réseaux de communication qui utilisent aussi la modélisation par graphes. On retrouve ainsi l'algorithme de Dijkstra dans le protocole de routage dynamique \textit{OSPF}.
-
-On peut donc envisager optimiser un réseau de nœuds distribués en permettant l'ajout d'un nœud et sa prise en compte automatique par le réseau.
-
-Quant à l'algorithme A*, il permettrait de déterminer un chemin point à point optimal utilisé ensuite par exemple pour créer une liaison par commutation de circuit intéressante si la taille des données qui doivent être échangées est importante.
-
-There  are  many  different  heuristic  functions  used  for  the  grid  maps.  Some famous  heuristics  are 
-Manhattan  distance,  diagonal  distance,  Euclidean  distance.  
-We  are  using  the  Manhattan  distance  to  estimate  h(x)  because  it  works  better  on 
-squared  grids. It  is  the  direct  distance  from  current  node  to  the  goal  node 
-without considering obstacles in the path. In this way h(x) is giving us the lowest 
-possible cos
-t to reach the goal node
-
-
-% \begin{table}[ht]
-%   \begin{center}
-%     \begin{tabular}{|c|c|c|c|c|}
-%       \hline
-%       & $h(t,\tau)$ & $S_{\OP{H}}^{(\alpha)} (f,\tau)$ & $L_{\OP{H}}^{(\alpha)} (\nu,t)$ & $H^{(\alpha)}(f,\nu)$ \\
-%       \hline
-%       LTI & $q(\tau)$ & $q(\tau) \delta(f)$ & $Q(\nu)$ & $Q(\nu) \delta(\nu-f)$ \\
-%       \hline
-%       LFI & $m(t) \delta(\tau)$ & $M(f) \delta(\tau)$ & $m(t)$ & $M(f)$\\
-%       \hline
-%       identité & $\delta(t)$ & $\delta(f)\delta(\tau)$ & $1$ & $\delta(\nu-f)$\\
-%       \hline
-%     \end{tabular}
-%     \caption{Exemple de tableau.}
-%     \label{tab:un-tableau}
-%   \end{center}
-% \end{table}
-
-
-% \begin{figure}[htp]
-%   \centering
-%   \includegraphics[width=4cm]{images/bitmap_image}
-%   \caption{Exemple d'image au format JPG.}
-%   \label{fig:une-autre-image}
-% \end{figure}
-
-
-%%% Local Variables: 
-%%% mode: latex
-%%% TeX-master: "isae-report-template"
-%%% End: 
+\paragraph{} Enfin, notons que dans la plupart des cas, ces algorithmes n'ont de réelle utilité et d'existence qu'au niveau du réseau et des couches basses. En effet, au niveau logiciel, les topologies que nous présenterons, de par leur construction, permettent de développer très simplement des algorithmes de routage spécifiques (ce routage peut d'ailleurs se matérialiser sur un circuit intégré qui serait spécialement développé).
