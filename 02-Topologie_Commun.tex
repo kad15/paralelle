@@ -92,20 +92,19 @@ la fonction f(n) = g(n) + h(n). Le noeud sélectionné est celui pour lequel f(n
 
 
 
-\paragraph{Utilisation}
+\paragraph{Utilisation} L'application évidente de ces algorithmes dans le cadre du calcul parallèle est le transfert optimal de données d'un nœud \textit{A} vers un nœud \textit{B}. Cette application est d'ailleurs largement inspirée du domaine des réseaux de communication qui utilisent aussi la modélisation par graphes. On retrouve ainsi l'algorithme de Dijkstra dans le protocole de routage dynamique \textit{OSPF}.
 
-Comment les utiliser pour transférer de façon optimale une donnée d'un noeud à un autre. ?????
-
-ci dessous une proposition de draft à discuter ou compléter au besoin
-à l'aide d'un complément de bibliographie.
-
-
-Dijkstra est utilisé dans le routage dynamique OSPF, on peut donc envisager optimiser un réseau
-de noeuds distribués en permettant l'ajout d'un noeud et sa prise en compte automatique par le réseau.
+On peut donc envisager optimiser un réseau de nœuds distribués en permettant l'ajout d'un nœud et sa prise en compte automatique par le réseau.
 
 Quant à l'algorithme A*, il permettrait de déterminer un chemin point à point optimal utilisé ensuite par exemple pour créer une liaison par commutation de circuit intéressante si la taille des données qui doivent être échangées est importante.
 
-
+There  are  many  different  heuristic  functions  used  for  the  grid  maps.  Some famous  heuristics  are 
+Manhattan  distance,  diagonal  distance,  Euclidean  distance.  
+We  are  using  the  Manhattan  distance  to  estimate  h(x)  because  it  works  better  on 
+squared  grids. It  is  the  direct  distance  from  current  node  to  the  goal  node 
+without considering obstacles in the path. In this way h(x) is giving us the lowest 
+possible cos
+t to reach the goal node
 
 
 % \begin{table}[ht]
