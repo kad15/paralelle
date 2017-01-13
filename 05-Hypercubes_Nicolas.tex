@@ -171,7 +171,7 @@ Ces propriétés permettent d'implémenter un algorithme de routage très simple
 
 \subsection{Comparaison des différentes architectures}
 
-À partir des résultats précédents, on peut manipuler les équations pour obtenir une estimation du diamètre, du degré des sommets, du nombre d'arêtes et de la bissection des différentes architectures étudiées jusqu'ici, directement en fonction du nombre de nœuds de calcul.
+À partir des résultats précédents, on peut manipuler les équations pour obtenir une estimation du diamètre, du degré des nœuds, du nombre d'arêtes et de la bissection des différentes architectures étudiées jusqu'ici, directement en fonction du nombre de nœuds de calcul $n$ souhaité.
 
 \begin{figure}[!h]
 \begin{center}
@@ -181,14 +181,14 @@ Architecture & Diamètre & Degré & Nombre d'arêtes & Bissection \\
 Graphe complet & $1$ & $n-1$ & $\frac{n(n-1)}{2}$ & $\approx \frac{n^2}{4}$ \\ 
 Grille de dimension $d$ & $d(n^{1/d}-1)$ & $2d$ & $dn(1-n^{-1/d})$ & $\approx n^{1-1/d}$ \\
 Grille de dimension $2$ & $2(\sqrt{n}-1)$ & $4$ & $2(n-\sqrt{n})$ & $\approx \sqrt{n}$ \\ 
-Grille d'arbres bidimensionnelle & • &  • & • & • \\ 
+Grille d'arbres bidimensionnelle & $\approx 2\log_2(\frac{n}{3})$ &  1, 2 ou 3 & $\approx \frac{4}{3}n-\frac{4}{\sqrt{3}}\sqrt{n}$ & $\approx \frac{\sqrt{n}}{\sqrt{3}}$ \\ 
 Hypercube & $\log_2 n$ & $\log_2 n$ & $\frac{1}{2}n\log_2 n$ & $\frac{n}{2}$ \\ 
 \end{tabular}
 \end{center}
 \caption{Comparaison des architectures pour $n$ nœuds}
 \end{figure}
 
-On constate que l'hypercube offre les meilleurs diamètre et bissection, au détriment d'un degré non constant et d'arêtes plus nombreuses et plus longues par rapport à une grille classique, ce qui implique un câblage plus complexe et coûteux. Cela reste néanmoins une architecture de choix à l'heure actuelle.
+On constate que l'hypercube offre de bons diamètre et bissection, au détriment d'un degré non constant et d'arêtes plus nombreuses et plus longues par rapport à une grille classique, ce qui implique un câblage plus complexe et coûteux. Pour ces raisons et selon l'application, on pourra préférer utiliser une grille d'arbres.
 
 \subsection{Template de communication}
 

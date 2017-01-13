@@ -1,8 +1,7 @@
 \section{Algorithmes de Dijkstra et A*}
 
 
-\paragraph{Algorithmes de Dijkstra : }Edgser Wybe Dijkstra (EWD), Physicien Néerlandais reconverti à l'informatique en 1955, a proposé en 1959 un algorithme de recherche de chemin minimum 
-dans un graphe  dont  la complexité est en O(n). 
+\paragraph{Algorithmes de Dijkstra : }Edgser Wybe Dijkstra (EWD), physicien néerlandais reconverti à l'informatique en 1955, a proposé en 1959 un algorithme de recherche de chemin minimum dans un graphe dont la complexité est en $\mathcal{O}(n)$. 
 
 \begin{figure}[htp]
   \centering
@@ -11,7 +10,7 @@ dans un graphe  dont  la complexité est en O(n).
   \label{fig:une-autre-image}
 \end{figure}
 
-On doit à Dijkstra, qui avait la réputation d'avoir mauvais caractère et qui était notoirement  allergique au ``GOTO'',
+On doit à Dijkstra, qui avait la réputation d'avoir mauvais caractère et qui était notoirement allergique au ``GOTO'',
 quelques citations\footnote{source : \url{https://fr.wikipedia.org/wiki/Edsger_Dijkstra}} telles que :
 
 
@@ -47,11 +46,10 @@ connexe pondéré (orienté ou non) dont le poids lié aux arêtes est positif o
   \label{fig:graph_dij}
 \end{figure}
 
-Sans entrer dans les détails d'implémentation que l'on trouve nombreuses sur la toile et dans la littérature, l'algorithme de Dijkstra est 
+Sans entrer dans les détails d'implémentation que l'on trouve nombreux sur la toile et dans la littérature, l'algorithme de Dijkstra est 
 un algorithme glouton qui utilise l'hypothèse qu'une décision prise sur la base
-d'un critère d'optimalité locale conduira à un optimum global. Ainsi, à chaque itération, l'algorithme choisit, parmi les noeuds non traités, le noeud
-du réseau dont la distance au noeud de départ est la plus faible. Ainsi, dans l'image \ref{fig:graph_dij}, on voit que le plus court chemin pour aller de A à C
-est égal à 7. On détermine ensuite de proche en proche le chemin le plus court grâce à la mémorisation des noeuds précédents. Ici, C a pour ``previous vertex'' E, 
+d'un critère d'optimalité locale conduira à un optimum global. Ainsi, à chaque itération, l'algorithme choisit, parmi les nœuds non traités, le nœud
+du réseau dont la distance au nœud de départ est la plus faible. Ainsi, dans l'image \ref{fig:graph_dij}, on voit que le plus court chemin pour aller de A à C a un coût de 7. On détermine ensuite de proche en proche le chemin le plus court grâce à la mémorisation des nœuds précédents. Ici, C a pour ``previous vertex'' E, 
 E -> D et D -> A. Le plus court chemin pour aller de A à C est donc ADEC. On utilise la même technique pour déterminer tous les chemins optimaux 
 d'origine A. Mais on peut n'avoir besoin que du calcul du chemin entre 2 sommets. De plus, la myopie de l'algorithme limite forcément ses performances. D'où l'idée
 d'utiliser une heuristique visant à guider les choix locaux. Ce qui nous amène à l'algorithme A* présenté brièvement dans la suite.
@@ -64,31 +62,29 @@ d'utiliser une heuristique visant à guider les choix locaux. Ce qui nous amène
 % \end{figure}
 \paragraph{Algorithme A* : }
 
-A* est l'algorithme qu'on utilise intuitivement pour se déplacer d'un enddroit à un autre dans une ville
-connaissant la direction à prendre. Grâce à cette information supplémentaire, A* va privilégier le noeud qui minimise 
-la somme de la distancce déjà parcourue et de la distance estimée restant à parcourir qui sera ici la distance à vol d'oiseau.
+A* est l'algorithme qu'on utilise intuitivement pour se déplacer d'un endroit à un autre dans une ville
+connaissant la direction à prendre. Grâce à cette information supplémentaire, A* va privilégier le nœud qui minimise 
+la somme de la distance déjà parcourue et de la distance estimée restant à parcourir, qui peut être ici la distance à vol d'oiseau.
 
 
 Cet algorithme a été proposé pour la première fois 
 par Peter E. Hart, Nils John Nilsson et Bertram Raphael
 en 1968. Il s'agit d'une extension de l'algorithme de Dijkstra et s'applique comme ce dernier
 à des graphes munis d'une distance positive. En outre, A* ne teste pas tous les chemins ; il ne fournit donc
-qu'un des meilleurs chemins. A* est cependant très performant dans le cas où le graphe comporte une faible densité de noeuds 
-mais pas ou peu efficace dans le cas de parcours de labyrinthes par exemple.
+qu'un des meilleurs chemins. A* est cependant très performant dans le cas où le graphe comporte une faible densité de nœuds 
+mais n'est pas ou peu efficace dans le cas de parcours de labyrinthes par exemple.
 
 
-Il faut donc choisir, en fonction du problème, une heuristique h, c'est à dire ici une fonction qui estime la distance 
-restante entre chaque noeud et l'arrivée, estimation par défaut qui ne doit jamais surestimer cette distance. 
+Il faut donc choisir, en fonction du problème, une heuristique $h$, c'est-à-dire ici une fonction qui estime la distance 
+restante entre chaque nœud et l'arrivée, estimation par défaut qui ne doit jamais surestimer cette distance. 
 La précision du résultat final dépendra de la précision de l'estimation.
-On peut citer les fonctons estimatrices suivantes :  la distance euclidienne (norme 2) ou à ``vol d'oiseau'' déjà citée 
+On peut citer les heuristiques suivantes : la distance euclidienne (norme 2) ou à ``vol d'oiseau'' déjà citée 
 et la distance de Manhattan (norme 1) qui, sur une grille, correspond à la somme des cases verticales et horizontales
-qui sépare le position courante de l'arrivée. Les deux distances sont utilisables dans A* car elles sous-estiment
+qui sépare la position courante de l'arrivée. Les deux distances sont utilisables dans A* car elles sous-estiment
 la distance à l'arrivée.
 
-
-A chaque étapes, l'algorithme calcule g , la distance déjà parcourue pour chaque noeud n non visité puis
-la fonction f(n) = g(n) + h(n). Le noeud sélectionné est celui pour lequel f(n) est minimale.
-
+À chaque étape, l'algorithme calcule $g$, la distance déjà parcourue pour chaque nœud $n$ non visité puis
+la valeur $f(n) = g(n) + h(n)$. Le nœud sélectionné est celui pour lequel $f$ est minimale. Lorsque l'heuristique est la fonction nulle, A* est équivalent à l'algorithme de Dijkstra.
 
 
 

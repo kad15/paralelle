@@ -320,7 +320,7 @@ $$\forall d \in \mathbb{N^*} \text{, }Card(A)_d = d\times (N-1)\times N^{d-1} $$
 
 \subsubsection{Diamètre de la grille}
 
-La construction de la grille telle qu'envisagée jusque là nous permet de faire l'observation suivante : un nœud de la grille diffère exactement d'une seule coordonnée de ses voisins. Pour reprendre l'exemple déjà vu ci-dessus avec $N=2$ et $d=2$, le nœud $AA$ et voisin des nœuds $AB$ et $BA$. Dans un cas plus général où les nœuds de la grille seraient formés de coordonnées entières, le nœud de coordonnées $(x_0,x_1, ..., x_{d-1})$ aurait pour voisin dans la dimension $i$ le noeud de coordonnées $(x_0,x_1,...,y_i,...,x_{d-1})$ avec $y_i=x_i\pm1$.
+La construction de la grille telle qu'envisagée jusque là nous permet de faire l'observation suivante : un nœud de la grille diffère exactement d'une seule coordonnée de ses voisins. Pour reprendre l'exemple déjà vu ci-dessus avec $N=2$ et $d=2$, le nœud $AA$ est voisin des nœuds $AB$ et $BA$. Dans un cas plus général où les nœuds de la grille seraient formés de coordonnées entières, le nœud de coordonnées $(x_0,x_1, ..., x_{d-1})$ aurait pour voisin dans la dimension $i$ le noeud de coordonnées $(x_0,x_1,...,y_i,...,x_{d-1})$ avec $y_i=x_i\pm1$.
 
 Or par définition, le diamètre d'un graphe est la plus grande distance entre deux sommets. Dans le cas général d'une grille composée de coordonnées entières, les deux nœuds les plus éloignés sont le nœud $\underbrace{(0,0,...,0)}_{q \text{ fois}}$ et le nœud $\underbrace{(N,N,...,N)}_{q \text{ fois}}$. Le plus long chemin entre ces deux nœuds est donc de passer par l'ensemble des coordonnées possibles, ce qui correspond à $q$ fois $N-1$ possibilités.
 
@@ -329,17 +329,17 @@ Au final, le diamètre $D$ d'une grille est : $$D = q\times(N-1)$$
 \subsubsection{Bissection de la grille}
 La bissection, ou plus précisément la largeur de la bissection, est le nombre minimum d'arêtes qu'il faut enlever à la grille pour la diviser en deux moitiés avec un nombre de nœuds identique (à un près).
 
-On remarque déjà que ce problème dépend de la parité du nombre de nœuds de la grille : dans le cas où celui-ci est pair, il est possible de diviser la grille en deux avec un nombre de nœuds identique; dans le cas où celui-ci est impaire, les deux grilles résultantes auront un nombre de nœuds égal, à plus ou moins un nœud près.
+On remarque déjà que ce problème dépend de la parité du nombre de nœuds de la grille : dans le cas où celui-ci est pair, il est possible de diviser la grille en deux avec un nombre de nœuds identique; dans le cas où celui-ci est impair, les deux grilles résultantes auront un nombre de nœuds égal, à plus ou moins un nœud près.
 
 \paragraph{Cas où $N$ est pair :}
 
-La séparation en deux grilles avec un nombre de nœuds identique est triviale. La question est cependant de connaitre le nombre exacte d'arêtes à enlever pour obtenir cette séparation.
+La séparation en deux grilles avec un nombre de nœuds identique est triviale. La question est cependant de connaître le nombre exact d'arêtes à enlever pour obtenir cette séparation.
 
-Or on a vu précédemment que passer de la dimension $d-1$ à la dimension $d$ se faisait en deux étapes : recopie $N$ fois de la grille de dimension $d-1$ et création des nouvelles arêtes entre chaque nœuds correspondants des grilles, c'est à dire $N^{d-1}$ arêtes.
+Or on a vu précédemment que passer de la dimension $d-1$ à la dimension $d$ se faisait en deux étapes : recopie $N$ fois de la grille de dimension $d-1$ et création des nouvelles arêtes entre chaque paire de nœuds correspondants dans les deux grilles, c'est à dire $N^{d-1}$ arêtes.
 
 Ainsi, lorsque l'on sépare une grille en deux, on la sépare à une jonction entre deux grilles de dimension $d-1$ ce qui nous conduit à enlever exactement $N^{d-1}$ arêtes.
 
-On peut donc dire que la largeur de la bissection d'une grille de coté $N$ ($N$ étant pair) est $N^{d-1}$.
+On peut donc dire que la largeur de la bissection d'une grille de côté $N$ ($N$ étant pair) est $N^{d-1}$.
 
 \paragraph{Cas où $N$ est impair :}
 
@@ -629,4 +629,4 @@ Différents algorithmes proposent de mettre en œuvre cette méthode. C'est nota
 \paragraph{} Après $N$ étapes, chaque nœud $(i,j)$ de la grille détient le coefficient $c_{i,j}$ de la matrice $C = AB$.\\
 
 
-Cet algorithme parallèle a donc une complexité en $\mathcal{O}(N)$ ce qui est bien meilleur que les algorithmes séquentiels de produit matriciel. En effet, une implémentation naïve d'un produit matriciel séquentiel (deux boucles "for" imbriquées) est en $\mathcal{O}(N^3)$ et des versions plus optimisées n'améliorent que très peu cette complexité. Par exemple, on apprend dans \cite{wiki:Strassen} que l'algorithme de Strassen a une complexité en $\mathcal{O}(N^{2,807})$ et dans \cite{wiki:Coppersmith-Winograd} que celui de Coppersmith-Winograd a une complexité en $\mathcal{O}(N^{2,376})$, ce qui en fait l'algorithme séquentiel de produit matriciel le plus efficace asymptotiquement.
+Cet algorithme parallèle a donc une complexité en $\mathcal{O}(N)$ ce qui est bien meilleur que les algorithmes séquentiels de produit matriciel et ce qui justifie son usage lorsque la taille des matrices devient importante. En effet, une implémentation naïve d'un produit matriciel séquentiel (trois boucles "for" imbriquées) est en $\mathcal{O}(N^3)$ et des versions plus optimisées n'améliorent que très peu cette complexité. Par exemple, on apprend dans \cite{wiki:Strassen} que l'algorithme de Strassen a une complexité en $\mathcal{O}(N^{2,807})$ et dans \cite{wiki:Coppersmith-Winograd} que celui de Coppersmith-Winograd a une complexité en $\mathcal{O}(N^{2,376})$, ce qui en fait l'algorithme séquentiel de produit matriciel le plus efficace asymptotiquement.
